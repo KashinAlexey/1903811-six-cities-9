@@ -1,6 +1,12 @@
 import CitiesPlacesCard from '../cities-places-card/cities-places-card';
 
-function MainScreen(): JSX.Element {
+type MainScreenProps = {
+  cardsCount: number;
+}
+
+function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
+  const citiesPlacesCards: JSX.Element[] = Array.from({length: cardsCount}, CitiesPlacesCard);
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -90,11 +96,7 @@ function MainScreen(): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesPlacesCard />
-                <CitiesPlacesCard />
-                <CitiesPlacesCard />
-                <CitiesPlacesCard />
-                <CitiesPlacesCard />
+                {citiesPlacesCards.map((card) => card)}
               </div>
             </section>
             <div className="cities__right-section">
