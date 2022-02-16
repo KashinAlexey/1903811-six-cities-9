@@ -1,22 +1,22 @@
 import CitiesPlacesCard from '../cities-places-card/cities-places-card';
+import Logo from '../logo/logo';
 
 type MainScreenProps = {
   cardsCount: number;
 }
 
 function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
-  const citiesPlacesCards: JSX.Element[] = Array.from({length: cardsCount}, CitiesPlacesCard);
+  const Cards = new Set();
+  for (let number = 0; number <= cardsCount; number++){
+    Cards.add(<CitiesPlacesCard key={number.toString()}/>);
+  }
 
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <a href="#section" className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
-            </div>
+            <Logo />
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
@@ -96,7 +96,7 @@ function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {citiesPlacesCards.map((card) => card)}
+                {Cards}
               </div>
             </section>
             <div className="cities__right-section">
