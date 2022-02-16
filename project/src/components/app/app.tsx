@@ -6,6 +6,7 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -36,6 +37,10 @@ function App({cardsCount}: AppScreenProps): JSX.Element {
         <Route
           path={AppRoute.Property}
           element={<PropertyScreen />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundScreen />}
         />
       </Routes>
     </BrowserRouter>
