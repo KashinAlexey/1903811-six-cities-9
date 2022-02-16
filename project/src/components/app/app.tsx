@@ -34,10 +34,10 @@ function App({cardsCount}: AppScreenProps): JSX.Element {
           path={AppRoute.Login}
           element={<LoginScreen />}
         />
-        <Route
-          path={AppRoute.Property}
-          element={<PropertyScreen />}
-        />
+        <Route path={AppRoute.Offer}>
+          <Route index element={<PropertyScreen />} />
+          <Route path=':id' element={<PropertyScreen />} />
+        </Route>
         <Route
           path="*"
           element={<NotFoundScreen />}
