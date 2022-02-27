@@ -7,18 +7,25 @@ import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {Offers} from '../../types/offer';
+import {Comments} from '../../types/offer';
 
 type AppScreenProps = {
-  cardsCount: number;
+  offers: Offers;
+  comments: Comments;
 }
 
-function App({cardsCount}: AppScreenProps): JSX.Element {
+function App({offers, comments}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen cardsCount={cardsCount} />}
+          element={
+            <MainScreen
+              offers={offers}
+            />
+          }
         />
         <Route
           path={AppRoute.Favorites}
