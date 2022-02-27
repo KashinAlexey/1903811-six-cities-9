@@ -2,14 +2,15 @@ import {Offer} from '../../types/offer';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
+  onMouseOver: (id: number) => void;
 }
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
-  const {offer} = props;
-  const {isPremium, price, title} = offer;
+  const {offer, onMouseOver} = props;
+  const {isPremium, price, title, id} = offer;
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)}>
       <div className="place-card__mark">
         <span>{isPremium ? 'Premium' : ''}</span>
       </div>
