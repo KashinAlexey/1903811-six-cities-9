@@ -45,3 +45,4 @@ export type Comment = {
 
 export type Offers = Offer[];
 export type Comments = Comment[];
+export type Locations = Offers[];
