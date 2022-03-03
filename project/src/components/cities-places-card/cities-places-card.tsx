@@ -1,4 +1,5 @@
 import {Offer} from '../../types/offer';
+import {Link} from 'react-router-dom';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
@@ -15,9 +16,9 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
         <span>{isPremium ? 'Premium' : ''}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#section">
+        <Link to="/offer">
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -39,7 +40,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#section">{title}</a>
+          <Link to="/offer">{title}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
