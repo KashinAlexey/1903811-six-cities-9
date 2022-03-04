@@ -8,14 +8,12 @@ import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {Offers} from '../../types/offer';
-import {Comments} from '../../types/offer';
 
 type AppScreenProps = {
   offers: Offers;
-  comments: Comments;
 }
 
-function App({offers, comments}: AppScreenProps): JSX.Element {
+function App({offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
