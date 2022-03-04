@@ -1,15 +1,12 @@
-import CitiesPlacesCard from '../cities-places-card/cities-places-card';
+import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import Logo from '../logo/logo';
+import {Offers} from '../../types/offer';
 
 type MainScreenProps = {
-  cardsCount: number;
+  offers: Offers;
 }
 
-function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
-  const Cards = new Set();
-  for (let number = 0; number <= cardsCount; number++){
-    Cards.add(<CitiesPlacesCard key={number.toString()}/>);
-  }
+function MainScreen({offers}: MainScreenProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -95,9 +92,7 @@ function MainScreen({cardsCount}: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Cards}
-              </div>
+              <CitiesPlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
