@@ -1,0 +1,52 @@
+import {Cities} from '../types/offer';
+
+export const CITIES: Cities = [
+  {
+    location: {
+      latitude: 48.8566,
+      longitude: 2.3522,
+      zoom: 8,
+    },
+    name: 'Paris',
+  },
+  {
+    location: {
+      latitude: 50.9375,
+      longitude: 6.9603,
+      zoom: 8,
+    },
+    name: 'Cologne',
+  },
+  {
+    location: {
+      latitude: 50.8476,
+      longitude: 4.3572,
+      zoom: 8,
+    },
+    name: 'Brussels',
+  },
+  {
+    location: {
+      latitude: 52.3676,
+      longitude: 4.9041,
+      zoom: 8,
+    },
+    name: 'Amsterdam',
+  },
+  {
+    location: {
+      latitude: 53.5511,
+      longitude: 9.9937,
+      zoom: 8,
+    },
+    name: 'Hamburg',
+  },
+  {
+    location: {
+      latitude: 51.2277,
+      longitude: 6.7735,
+      zoom: 8,
+    },
+    name: 'Dusseldorf',
+  },
+];

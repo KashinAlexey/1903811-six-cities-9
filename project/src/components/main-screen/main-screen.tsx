@@ -1,12 +1,34 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
+import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import {Offers} from '../../types/offer';
+import {Cities, Offers, City} from '../../types/offer';
+import {useState} from 'react';
 
 type MainScreenProps = {
   offers: Offers;
+  cities: Cities;
 }
 
-function MainScreen({offers}: MainScreenProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const {offers, cities} = props;
+  const DEFAULT_CITY: City = {
+    location: {
+      latitude: 48.8566,
+      longitude: 2.3522,
+      zoom: 8,
+    },
+    name: 'Paris',
+  };
+
+  const [selectedCity, setSelectedCity] = useState<City | undefined>(
+    DEFAULT_CITY,
+  );
+
+  const onListItemHover = (listItemName: string) => {
+    const currentCity = cities.find((city) => city.name === listItemName);
+
+    setSelectedCity(currentCity);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -37,40 +59,11 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#section">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#section">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#section">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a href="#section" className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#section">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#section">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <LocationsList
+            cities={cities}
+            onListItemHover={onListItemHover}
+            selectedCity={selectedCity}
+          />
         </div>
         <div className="cities">
           <div className="cities__places-container container">

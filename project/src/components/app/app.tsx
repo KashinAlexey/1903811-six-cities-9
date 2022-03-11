@@ -7,13 +7,16 @@ import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {Offers} from '../../types/offer';
+import {Cities, Offers} from '../../types/offer';
 
 type AppScreenProps = {
   offers: Offers;
+  cities: Cities;
 }
 
-function App({offers}: AppScreenProps): JSX.Element {
+function App(props: AppScreenProps): JSX.Element {
+  const {offers, cities} = props;
+
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +25,7 @@ function App({offers}: AppScreenProps): JSX.Element {
           element={
             <MainScreen
               offers={offers}
+              cities={cities}
             />
           }
         />
