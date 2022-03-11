@@ -4,16 +4,16 @@ import {useState} from 'react';
 
 type CitiesPlacesListProps = {
   offers: Offers;
+  onOfferItemHover: (OfferItemId: number) => void;
 }
 
 function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
-  const {offers} = props;
+  const {offers, onOfferItemHover} = props;
   const [offerId, setOfferId] = useState(0);
 
   const onMouseOver = (id: number) => {
     setOfferId(id);
-    // eslint-disable-next-line no-console
-    console.log(offerId);
+    onOfferItemHover(offerId);
   };
 
   const Cards = new Set();

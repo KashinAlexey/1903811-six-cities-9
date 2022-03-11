@@ -1,8 +1,9 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import {Cities, Offers, City} from '../../types/offer';
+import {Cities, Offers, Offer, City} from '../../types/offer';
 import {useState} from 'react';
+import Map from '../map/map';
 
 type MainScreenProps = {
   offers: Offers;
@@ -15,19 +16,27 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     location: {
       latitude: 48.8566,
       longitude: 2.3522,
-      zoom: 8,
+      zoom: 12,
     },
     name: 'Paris',
   };
 
-  const [selectedCity, setSelectedCity] = useState<City | undefined>(
+  const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
 
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
+
   const onListItemHover = (listItemName: string) => {
-    const currentCity = cities.find((city) => city.name === listItemName);
+    const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
 
     setSelectedCity(currentCity);
+  };
+
+  const onOfferItemHover = (offerItemId: number) => {
+    const currentOffer = offers.find((offer) => offer.id === offerItemId);
+
+    setSelectedOffer(currentOffer);
   };
 
   return (
@@ -85,10 +94,17 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <CitiesPlacesList offers={offers} />
+              <CitiesPlacesList
+                offers={offers}
+                onOfferItemHover={onOfferItemHover}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                selectedCity={selectedCity}
+                offers={offers}
+                selectedOffer={selectedOffer}
+              />
             </div>
           </div>
         </div>
