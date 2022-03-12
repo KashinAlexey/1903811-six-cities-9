@@ -1,6 +1,5 @@
 import {Offers} from '../../types/offer';
 import CitiesPlacesCard from '../cities-places-card/cities-places-card';
-import {useState} from 'react';
 
 type CitiesPlacesListProps = {
   offers: Offers;
@@ -9,11 +8,9 @@ type CitiesPlacesListProps = {
 
 function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
   const {offers, onOfferItemHover} = props;
-  const [offerId, setOfferId] = useState(0);
 
   const onMouseOver = (id: number) => {
-    setOfferId(id);
-    onOfferItemHover(offerId);
+    onOfferItemHover(id);
   };
 
   const Cards = new Set();
