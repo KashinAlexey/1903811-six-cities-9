@@ -4,39 +4,29 @@ import Logo from '../logo/logo';
 import {Cities, Offers, Offer, City} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
+import {DEFAULT_CITY} from '../../const';
 
 type MainScreenProps = {
   offers: Offers;
   cities: Cities;
+  onOfferItemHover: (OfferItemId: number) => void;
+  selectedOffer: Offer | undefined;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, cities} = props;
-  const DEFAULT_CITY: City = {
-    location: {
-      latitude: 48.8566,
-      longitude: 2.3522,
-      zoom: 12,
-    },
-    name: 'Paris',
-  };
+  const {offers, cities, onOfferItemHover, selectedOffer} = props;
+  const className = 'cities__map map';
+  const listClassName = 'cities__places-list';
+  const offersCount = offers.length;
 
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
 
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
-
   const onListItemHover = (listItemName: string) => {
     const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
 
     setSelectedCity(currentCity);
-  };
-
-  const onOfferItemHover = (offerItemId: number) => {
-    const currentOffer = offers.find((offer) => offer.id === offerItemId);
-
-    setSelectedOffer(currentOffer);
   };
 
   return (
@@ -78,7 +68,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersCount} places to stay in {selectedCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -97,6 +87,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <CitiesPlacesList
                 offers={offers}
                 onOfferItemHover={onOfferItemHover}
+                listClassName={listClassName}
               />
             </section>
             <div className="cities__right-section">
@@ -104,6 +95,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 selectedCity={selectedCity}
                 offers={offers}
                 selectedOffer={selectedOffer}
+                className={className}
               />
             </div>
           </div>

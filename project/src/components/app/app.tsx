@@ -7,7 +7,8 @@ import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {Cities, Offers} from '../../types/offer';
+import {Cities, Offers, Offer} from '../../types/offer';
+import {useState} from 'react';
 
 type AppScreenProps = {
   offers: Offers;
@@ -16,6 +17,13 @@ type AppScreenProps = {
 
 function App(props: AppScreenProps): JSX.Element {
   const {offers, cities} = props;
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
+
+  const onOfferItemHover = (offerItemId: number) => {
+    const currentOffer = offers.find((offer) => offer.id === offerItemId);
+
+    setSelectedOffer(currentOffer);
+  };
 
   return (
     <BrowserRouter>
@@ -26,6 +34,8 @@ function App(props: AppScreenProps): JSX.Element {
             <MainScreen
               offers={offers}
               cities={cities}
+              onOfferItemHover={onOfferItemHover}
+              selectedOffer={selectedOffer}
             />
           }
         />
@@ -44,8 +54,24 @@ function App(props: AppScreenProps): JSX.Element {
           element={<LoginScreen />}
         />
         <Route path={AppRoute.Offer}>
-          <Route index element={<PropertyScreen />} />
-          <Route path=':id' element={<PropertyScreen />} />
+          <Route index
+            element={
+              <PropertyScreen
+                selectedOffer={selectedOffer}
+                offers={offers}
+                onOfferItemHover={onOfferItemHover}
+              />
+            }
+          />
+          <Route path=':id'
+            element={
+              <PropertyScreen
+                selectedOffer={selectedOffer}
+                offers={offers}
+                onOfferItemHover={onOfferItemHover}
+              />
+            }
+          />
         </Route>
         <Route
           path="*"

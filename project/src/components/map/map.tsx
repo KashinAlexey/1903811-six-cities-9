@@ -4,27 +4,29 @@ import useMap from '../../hooks/useMap';
 import {City, Offer, Offers} from '../../types/offer';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import 'leaflet/dist/leaflet.css';
+import {ICON_SIZE, ICON_ANCHER} from '../../const';
 
 type MapProps = {
   selectedCity: City;
   offers: Offers;
-  selectedOffer: Offer | undefined;
+  selectedOffer?: Offer | undefined;
+  className: string;
 };
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_ANCHER, ICON_SIZE],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_ANCHER, ICON_SIZE],
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {selectedCity, offers, selectedOffer} = props;
+  const {selectedCity, offers, selectedOffer, className} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, selectedCity);
@@ -48,7 +50,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOffer]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={className} ref={mapRef}></section>;
 }
 
 export default Map;
