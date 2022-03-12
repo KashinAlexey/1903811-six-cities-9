@@ -8,10 +8,13 @@ import Map from '../map/map';
 type MainScreenProps = {
   offers: Offers;
   cities: Cities;
+  onOfferItemHover: (OfferItemId: number) => void;
+  selectedOffer: Offer | undefined;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, cities} = props;
+  const {offers, cities, onOfferItemHover, selectedOffer} = props;
+
   const DEFAULT_CITY: City = {
     location: {
       latitude: 48.8566,
@@ -25,7 +28,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     DEFAULT_CITY,
   );
 
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
+  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
 
   const onListItemHover = (listItemName: string) => {
     const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
@@ -33,11 +36,13 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     setSelectedCity(currentCity);
   };
 
-  const onOfferItemHover = (offerItemId: number) => {
-    const currentOffer = offers.find((offer) => offer.id === offerItemId);
+  // const onOfferItemHover = (offerItemId: number) => {
+  //   const currentOffer = offers.find((offer) => offer.id === offerItemId);
 
-    setSelectedOffer(currentOffer);
-  };
+  //   setSelectedOffer(currentOffer);
+  // };
+
+  const className = 'cities__map map';
 
   return (
     <div className="page page--gray page--main">
@@ -104,6 +109,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 selectedCity={selectedCity}
                 offers={offers}
                 selectedOffer={selectedOffer}
+                className={className}
               />
             </div>
           </div>

@@ -1,8 +1,30 @@
 import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
+import { Offer, City, Offers } from '../../types/offer';
+import Map from '../map/map';
 
-function PropertyScreen() {
+type PropertyScreenProps = {
+  selectedOffer: Offer | undefined;
+  offers: Offers;
+}
+
+function PropertyScreen(props: PropertyScreenProps) {
+  const DEFAULT_CITY: City = {
+    location: {
+      latitude: 48.8566,
+      longitude: 2.3522,
+      zoom: 12,
+    },
+    name: 'Paris',
+  };
+  const {selectedOffer, offers} = props;
+  const city = selectedOffer?.city || DEFAULT_CITY;
+
+  // eslint-disable-next-line no-console
+  console.log(selectedOffer);
+  const className = 'property__map map';
+
   return (
     <div className="page">
       <header className="header">
@@ -151,7 +173,11 @@ function PropertyScreen() {
               <ReviewsList reviews={reviews}/>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map
+            selectedCity={city}
+            offers={offers}
+            className={className}
+          />
         </section>
         <div className="container">
           <section className="near-places places">

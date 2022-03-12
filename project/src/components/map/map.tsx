@@ -8,7 +8,8 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   selectedCity: City;
   offers: Offers;
-  selectedOffer: Offer | undefined;
+  selectedOffer?: Offer | undefined;
+  className: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -24,7 +25,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {selectedCity, offers, selectedOffer} = props;
+  const {selectedCity, offers, selectedOffer, className} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, selectedCity);
@@ -48,7 +49,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOffer]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={className} ref={mapRef}></section>;
 }
 
 export default Map;

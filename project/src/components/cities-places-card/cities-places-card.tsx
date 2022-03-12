@@ -16,7 +16,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
         <span>{isPremium ? 'Premium' : ''}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/offer">
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
         </Link>
       </div>
@@ -40,7 +40,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/offer">{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
