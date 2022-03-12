@@ -35,7 +35,7 @@ export type Offer = {
   type: string
 }
 
-export type Comment = {
+export type Review = {
   comment: string
   date: string
   id: number
@@ -44,6 +44,6 @@ export type Comment = {
 }
 
 export type Offers = Offer[];
-export type Comments = Comment[];
+export type Reviews = Review[];
 export type Locations = Offers[];
 export type Cities = City[];
