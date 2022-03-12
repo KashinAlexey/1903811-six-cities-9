@@ -7,10 +7,11 @@ type ReviewsListProps = {
 
 function ReviewsList(props: ReviewsListProps) {
   const {reviews} = props;
+  const reviewsCount = reviews.length;
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
       <ul className="reviews__list">
         {reviews.map((review, index) => {
           const keyValue = `${index}-${review.id}`;

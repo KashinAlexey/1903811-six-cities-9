@@ -4,6 +4,7 @@ import useMap from '../../hooks/useMap';
 import {City, Offer, Offers} from '../../types/offer';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import 'leaflet/dist/leaflet.css';
+import {ICON_SIZE, ICON_ANCHER} from '../../const';
 
 type MapProps = {
   selectedCity: City;
@@ -14,14 +15,14 @@ type MapProps = {
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_ANCHER, ICON_SIZE],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [ICON_SIZE, ICON_SIZE],
+  iconAnchor: [ICON_ANCHER, ICON_SIZE],
 });
 
 function Map(props: MapProps): JSX.Element {

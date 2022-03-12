@@ -20,7 +20,7 @@ export type Offer = {
   bedrooms: number
   city: City
   description: string
-  goods: [string]
+  goods: string[]
   host: User
   id: number
   images: [string]

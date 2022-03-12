@@ -1,9 +1,11 @@
 import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
 import { reviews } from '../../mocks/reviews';
-import { Offer, City, Offers } from '../../types/offer';
+import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
+import {DEFAULT_CITY} from '../../const';
+import {EMPTY_OFFER} from '../../const';
 
 type PropertyScreenProps = {
   selectedOffer: Offer | undefined;
@@ -12,18 +14,12 @@ type PropertyScreenProps = {
 }
 
 function PropertyScreen(props: PropertyScreenProps) {
-  const DEFAULT_CITY: City = {
-    location: {
-      latitude: 48.8566,
-      longitude: 2.3522,
-      zoom: 12,
-    },
-    name: 'Paris',
-  };
   const {selectedOffer, offers, onOfferItemHover} = props;
   const city = selectedOffer?.city || DEFAULT_CITY;
   const className = 'property__map map';
   const listClassName = 'near-places__list';
+  const offer = selectedOffer || EMPTY_OFFER;
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
 
   return (
     <div className="page">
@@ -78,11 +74,11 @@ function PropertyScreen(props: PropertyScreenProps) {
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
-                <span>Premium</span>
+                <span>{isPremium ? 'Premium' : ''}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -96,77 +92,55 @@ function PropertyScreen(props: PropertyScreenProps) {
                   <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {goods.map((good, index) => {
+                    const keyValue = `${index}-${good}`;
+                    return (
+                      <li
+                        className="property__inside-item"
+                        key={keyValue}
+                      >
+                        {good}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {host.name}
                   </span>
                   <span className="property__user-status">
-                    Pro
+                    {host.isPro ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>

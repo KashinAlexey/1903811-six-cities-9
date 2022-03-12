@@ -4,6 +4,7 @@ import Logo from '../logo/logo';
 import {Cities, Offers, Offer, City} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
+import {DEFAULT_CITY} from '../../const';
 
 type MainScreenProps = {
   offers: Offers;
@@ -14,15 +15,9 @@ type MainScreenProps = {
 
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers, cities, onOfferItemHover, selectedOffer} = props;
-
-  const DEFAULT_CITY: City = {
-    location: {
-      latitude: 48.8566,
-      longitude: 2.3522,
-      zoom: 12,
-    },
-    name: 'Paris',
-  };
+  const className = 'cities__map map';
+  const listClassName = 'cities__places-list';
+  const offersCount = offers.length;
 
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
@@ -33,9 +28,6 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
     setSelectedCity(currentCity);
   };
-
-  const className = 'cities__map map';
-  const listClassName = 'cities__places-list';
 
   return (
     <div className="page page--gray page--main">
@@ -76,7 +68,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offersCount} places to stay in {selectedCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
