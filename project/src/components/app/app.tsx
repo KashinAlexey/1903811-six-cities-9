@@ -54,8 +54,8 @@ function App(props: AppScreenProps): JSX.Element {
           element={<LoginScreen />}
         />
         <Route path={AppRoute.Offer}>
-          <Route index element={<PropertyScreen selectedOffer={selectedOffer} offers={offers}/>} />
-          <Route path=':id' element={<PropertyScreen selectedOffer={selectedOffer} offers={offers}/>} />
+          <Route index element={<PropertyScreen selectedOffer={selectedOffer} offers={offers} onOfferItemHover={onOfferItemHover}/>} />
+          <Route path=':id' element={<PropertyScreen selectedOffer={selectedOffer} offers={offers} onOfferItemHover={onOfferItemHover}/>} />
         </Route>
         <Route
           path="*"

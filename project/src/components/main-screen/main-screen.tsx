@@ -28,21 +28,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     DEFAULT_CITY,
   );
 
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
-
   const onListItemHover = (listItemName: string) => {
     const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
 
     setSelectedCity(currentCity);
   };
 
-  // const onOfferItemHover = (offerItemId: number) => {
-  //   const currentOffer = offers.find((offer) => offer.id === offerItemId);
-
-  //   setSelectedOffer(currentOffer);
-  // };
-
   const className = 'cities__map map';
+  const listClassName = 'cities__places-list';
 
   return (
     <div className="page page--gray page--main">
@@ -102,6 +95,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <CitiesPlacesList
                 offers={offers}
                 onOfferItemHover={onOfferItemHover}
+                listClassName={listClassName}
               />
             </section>
             <div className="cities__right-section">
