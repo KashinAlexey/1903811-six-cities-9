@@ -5,6 +5,8 @@ import {Cities, Offers, Offer, City} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
+import {store} from '../../store/index';
+import { changeCityAction } from '../../store/action';
 
 type MainScreenProps = {
   offers: Offers;
@@ -26,6 +28,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const onListItemHover = (listItemName: string) => {
     const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
 
+    store.dispatch(changeCityAction(currentCity));
     setSelectedCity(currentCity);
   };
 
@@ -92,7 +95,6 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                selectedCity={selectedCity}
                 offers={offers}
                 selectedOffer={selectedOffer}
                 className={className}
