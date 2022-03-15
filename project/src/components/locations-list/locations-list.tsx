@@ -27,7 +27,7 @@ function LocationsList(props: LocationsListProps): JSX.Element {
               key={keyValue}
               onClick={listItemHoverHandler}
             >
-              <Link to="" className={`locations__item-link tabs__item ${city.name === selectedCity?.name ? 'tabs__item--active' : ''}`}>
+              <Link to="/" className={`locations__item-link tabs__item ${city.name === selectedCity?.name ? 'tabs__item--active' : ''}`}>
                 <span>{city.name}</span>
               </Link>
             </li>

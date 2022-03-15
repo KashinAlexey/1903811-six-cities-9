@@ -4,7 +4,6 @@ import { reviews } from '../../mocks/reviews';
 import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import {DEFAULT_CITY} from '../../const';
 import {EMPTY_OFFER} from '../../const';
 
 type PropertyScreenProps = {
@@ -15,7 +14,6 @@ type PropertyScreenProps = {
 
 function PropertyScreen(props: PropertyScreenProps) {
   const {selectedOffer, offers, onOfferItemHover} = props;
-  const city = selectedOffer?.city || DEFAULT_CITY;
   const className = 'property__map map';
   const listClassName = 'near-places__list';
   const offer = selectedOffer || EMPTY_OFFER;
@@ -148,7 +146,6 @@ function PropertyScreen(props: PropertyScreenProps) {
             </div>
           </div>
           <Map
-            selectedCity={city}
             offers={offers.slice(0, 3)}
             className={className}
           />
