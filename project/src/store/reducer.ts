@@ -4,11 +4,11 @@ import {
   changeCityAction
 } from './action';
 import { DEFAULT_CITY } from '../const';
-import { EMPTY_OFFER } from '../const';
+import { offers } from '../mocks/offers';
 
 const initialState = {
   city: DEFAULT_CITY,
-  offers: [EMPTY_OFFER],
+  offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {

@@ -1,32 +1,37 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import {Cities, Offers, Offer, City} from '../../types/offer';
+import { Offer, City, Offers} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
 import { changeCityAction } from '../../store/action';
+import { getOffers } from '../../offers';
+import {CITIES} from '../../mocks/cities';
 
 type MainScreenProps = {
   offers: Offers;
-  cities: Cities;
   onOfferItemHover: (OfferItemId: number) => void;
   selectedOffer: Offer | undefined;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, cities, onOfferItemHover, selectedOffer} = props;
+  const {offers, onOfferItemHover, selectedOffer} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
-  const offersCount = offers.length;
+
+  const city = store.getState().city;
 
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
 
+  const currentOffers = getOffers(offers, city);
+  const offersCount = currentOffers.length;
+
   const onListItemHover = (listItemName: string) => {
-    const currentCity = cities.find((city) => city.name === listItemName) || DEFAULT_CITY;
+    const currentCity = CITIES.find((_city) => _city.name === listItemName) || DEFAULT_CITY;
 
     store.dispatch(changeCityAction(currentCity));
     setSelectedCity(currentCity);
@@ -62,7 +67,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <LocationsList
-            cities={cities}
+            cities={CITIES}
             onListItemHover={onListItemHover}
             selectedCity={selectedCity}
           />
@@ -88,14 +93,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <CitiesPlacesList
-                offers={offers}
+                offers={currentOffers}
                 onOfferItemHover={onOfferItemHover}
                 listClassName={listClassName}
               />
             </section>
             <div className="cities__right-section">
               <Map
-                offers={offers}
+                offers={currentOffers}
                 selectedOffer={selectedOffer}
                 className={className}
               />

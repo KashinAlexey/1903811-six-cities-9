@@ -7,17 +7,14 @@ import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {Cities, Offers, Offer} from '../../types/offer';
+import {Offer} from '../../types/offer';
 import {useState} from 'react';
+import {store} from '../../store/index';
 
-type AppScreenProps = {
-  offers: Offers;
-  cities: Cities;
-}
-
-function App(props: AppScreenProps): JSX.Element {
-  const {offers, cities} = props;
+function App(): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
+
+  const offers = store.getState().offers;
 
   const onOfferItemHover = (offerItemId: number) => {
     const currentOffer = offers.find((offer) => offer.id === offerItemId);
@@ -33,7 +30,6 @@ function App(props: AppScreenProps): JSX.Element {
           element={
             <MainScreen
               offers={offers}
-              cities={cities}
               onOfferItemHover={onOfferItemHover}
               selectedOffer={selectedOffer}
             />
