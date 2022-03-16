@@ -7,9 +7,6 @@ function ReviewsForm(): JSX.Element {
   });
 
   const fieldChangeHandle = (evt: { target: { name: string; value: string; }; }) => {
-    // Код для обновления состояния
-    // eslint-disable-next-line no-console
-    console.log(formData.review);
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };

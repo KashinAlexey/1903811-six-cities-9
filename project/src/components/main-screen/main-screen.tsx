@@ -10,6 +10,7 @@ import { changeCityAction } from '../../store/action';
 import { getOffers } from '../../offers';
 import {CITIES} from '../../mocks/cities';
 import Sort from '../sort/sort';
+import { getSortedData } from '../../sort';
 
 
 type MainScreenProps = {
@@ -22,14 +23,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers, onOfferItemHover, selectedOffer} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
-
   const city = store.getState().city;
 
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
 
-  const currentOffers = getOffers(offers, city);
+  const [currentOffers, setCurrenOffers] = useState(getOffers(offers, city));
+
   const offersCount = currentOffers.length;
 
   const onListItemHover = (listItemName: string) => {
@@ -37,6 +38,11 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
     store.dispatch(changeCityAction(currentCity));
     setSelectedCity(currentCity);
+    setCurrenOffers(getOffers(offers, currentCity));
+  };
+
+  const onSortChange = (type: string) => {
+    setCurrenOffers(getSortedData(getOffers(offers, city), type));
   };
 
   return (
@@ -79,7 +85,9 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersCount} places to stay in {selectedCity.name}</b>
-              <Sort />
+              <Sort
+                onSortChange={onSortChange}
+              />
               <CitiesPlacesList
                 offers={currentOffers}
                 onOfferItemHover={onOfferItemHover}
