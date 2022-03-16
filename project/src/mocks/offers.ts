@@ -31,7 +31,7 @@ export const offers: Offers = [
     maxAdults: 4,
     previewImage: 'img/1.png',
     price: 150,
-    rating: 4.8,
+    rating: 4.9,
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
   },
