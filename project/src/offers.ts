@@ -6,3 +6,6 @@ export const getOffers = (offers: Offers, city: City) => offers.slice().filter((
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
+
+export const isUserAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Auth;

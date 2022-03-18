@@ -10,7 +10,7 @@ import {UserData} from '../types/user-data';
 import {errorHandle} from '../services/error-handle';
 
 export const fetchOffersAction = createAsyncThunk(
-  'data/fetchQuestions',
+  'data/fetchOffers',
   async () => {
     try {
       const {data} = await api.get<Offers>(APIRoute.Offers);

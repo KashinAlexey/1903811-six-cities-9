@@ -1,10 +1,12 @@
-import {isCheckedAuth} from '../../offers';
+import {isUserAuth} from '../../offers';
 import {useAppSelector} from '../../hooks/index';
 import {Link} from 'react-router-dom';
+import { store } from '../../store';
+import { logoutAction } from '../../store/api-actions';
 
 function HeaderNav(): JSX.Element {
   const {authorizationStatus} = useAppSelector((state) => state);
-  const isAuth = isCheckedAuth(authorizationStatus);
+  const isAuth = isUserAuth(authorizationStatus);
 
   return (
     <nav className="header__nav">
@@ -17,7 +19,13 @@ function HeaderNav(): JSX.Element {
           </a>
         </li>
         <li className="header__nav-item">
-          <Link to={isAuth ? '' : '/login'} className="header__nav-link">
+          <Link
+            to={isAuth ? '' : '/login'}
+            className="header__nav-link"
+            onClick={() => {
+              if (isAuth) {store.dispatch(logoutAction());}
+            }}
+          >
             <span className="header__signout">{isAuth ? 'Sign out' : 'Sign in'}</span>
           </Link>
         </li>
