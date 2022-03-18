@@ -1,7 +1,6 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/index';
 import {AppRoute} from '../../const';
-import {AuthorizationStatus} from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -49,7 +48,7 @@ function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <FavoritesScreen offers={offers} />
             </PrivateRoute>
