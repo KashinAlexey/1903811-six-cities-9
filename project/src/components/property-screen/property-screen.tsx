@@ -5,6 +5,7 @@ import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import {EMPTY_OFFER} from '../../const';
+import HeaderNav from '../header-nav/header-nav';
 
 type PropertyScreenProps = {
   selectedOffer: Offer | undefined;
@@ -25,22 +26,7 @@ function PropertyScreen(props: PropertyScreenProps) {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a href="#section" className="header__nav-link header__nav-link--profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a href="#section" className="header__nav-link">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <HeaderNav />
           </div>
         </div>
       </header>

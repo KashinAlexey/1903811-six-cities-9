@@ -25,9 +25,6 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const listClassName = 'cities__places-list';
   const city = store.getState().city;
 
-  // eslint-disable-next-line no-console
-  console.log(store.getState().authorizationStatus);
-
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
