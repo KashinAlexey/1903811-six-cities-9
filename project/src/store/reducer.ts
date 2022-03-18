@@ -1,23 +1,35 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
   addOffersAction,
-  changeCityAction
+  changeCityAction,
+  requireAuthorization
 } from './action';
-import { DEFAULT_CITY } from '../const';
-import { offers } from '../mocks/offers';
+import { DEFAULT_CITY, AuthorizationStatus } from '../const';
+import { City, Offers } from '../types/offer';
 
-const initialState = {
+type InitialState = {
+  city: City,
+  offers: Offers,
+  authorizationStatus: AuthorizationStatus,
+  isDataLoaded: boolean,
+}
+
+const initialState: InitialState = {
   city: DEFAULT_CITY,
-  offers,
+  offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(addOffersAction, (state, action) => {
       state.offers = action.payload;
-    })
-    .addCase(changeCityAction, (state, action) => {
+      state.isDataLoaded = true;
+    }).addCase(changeCityAction, (state, action) => {
       state.city = action.payload;
+    }).addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
