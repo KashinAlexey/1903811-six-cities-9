@@ -69,3 +69,15 @@ export const DEFAULT_ICON = {
 
 export const ICON_SIZE = 40;
 export const ICON_ANCHER = 20;
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}

@@ -1,4 +1,5 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/index';
 import {AppRoute} from '../../const';
 import {AuthorizationStatus} from '../../const';
 import MainScreen from '../main-screen/main-screen';
@@ -7,11 +8,14 @@ import LoginScreen from '../login-screen/login-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import {Offer} from '../../types/offer';
 import {useState} from 'react';
 import {store} from '../../store/index';
+import {isCheckedAuth} from '../../offers';
 
 function App(): JSX.Element {
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>();
 
   const offers = store.getState().offers;
@@ -21,6 +25,12 @@ function App(): JSX.Element {
 
     setSelectedOffer(currentOffer);
   };
+
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
