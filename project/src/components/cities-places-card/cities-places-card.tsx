@@ -4,15 +4,14 @@ import {Link} from 'react-router-dom';
 type CitiesPlacesCardProps = {
   offer: Offer;
   onMouseOver: (id: number) => void;
-  onMouseClick: (id: number) => void;
 }
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
-  const {offer, onMouseOver, onMouseClick} = props;
+  const {offer, onMouseOver} = props;
   const {isPremium, price, title, id} = offer;
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)} onClick={() => onMouseClick(id)}>
+    <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)}>
       <div className="place-card__mark">
         <span>{isPremium ? 'Premium' : ''}</span>
       </div>

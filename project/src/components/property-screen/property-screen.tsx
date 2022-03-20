@@ -5,20 +5,29 @@ import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import HeaderNav from '../header-nav/header-nav';
 import {useAppSelector} from '../../hooks/index';
 import LoadingScreen from '../loading-screen/loading-screen';
+import {useParams} from 'react-router-dom';
+import {store} from '../../store/index';
+import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
+import { resetAllOfferAction } from '../../store/action';
+import {useEffect, useState} from 'react';
 
-type PropertyScreenProps = {
-  onMouseClick: (OfferItemId: number) => void;
-}
-
-function PropertyScreen(props: PropertyScreenProps) {
-  const {onMouseClick} = props;
-
+function PropertyScreen() {
+  const params = useParams();
+  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
+  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-
-  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
-
   const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
+
+  useEffect(() => {
+    if (params.id && +params.id !== selectedOfferId) {
+      setSelectedOfferId(+params.id);
+      store.dispatch(resetAllOfferAction());
+      store.dispatch(fetchOfferAction(+params.id));
+      store.dispatch(fetchNearbyOfferAction(+params.id));
+      store.dispatch(fetchCommentsAction(+params.id));
+    }
+  }, [selectedOfferId, params]);
 
   if (!isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded) {
     return (
@@ -148,7 +157,6 @@ function PropertyScreen(props: PropertyScreenProps) {
             <CitiesPlacesList
               offers={nearbyOffers}
               onOfferItemHover={() => null}
-              onMouseClick={onMouseClick}
               listClassName={listClassName}
             />
           </section>

@@ -15,13 +15,10 @@ import HeaderNav from '../header-nav/header-nav';
 
 type MainScreenProps = {
   offers: Offers;
-  onOfferItemHover: (OfferItemId: number) => void;
-  onMouseClick: (OfferItemId: number) => void;
-  selectedOfferId: number;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, onOfferItemHover, onMouseClick, selectedOfferId} = props;
+  const {offers} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
   const city = store.getState().city;
@@ -29,6 +26,8 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
+
+  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
 
   const [currentOffers, setCurrenOffers] = useState(getOffers(offers, city));
 
@@ -40,6 +39,10 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     store.dispatch(changeCityAction(currentCity));
     setSelectedCity(currentCity);
     setCurrenOffers(getOffers(offers, currentCity));
+  };
+
+  const onOfferItemHover = (offerItemId: number) => {
+    setSelectedOfferId(offerItemId);
   };
 
   const onSortChange = (type: string) => {
@@ -77,7 +80,6 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <CitiesPlacesList
                 offers={currentOffers}
                 onOfferItemHover={onOfferItemHover}
-                onMouseClick={onMouseClick}
                 listClassName={listClassName}
               />
             </section>

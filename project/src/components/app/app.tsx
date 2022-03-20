@@ -8,29 +8,12 @@ import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {useState} from 'react';
 import {store} from '../../store/index';
 import {isCheckedAuth} from '../../offers';
-import { resetAllOfferAction } from '../../store/action';
-import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
-
-  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
-
   const offers = store.getState().offers;
-
-  const onOfferItemHover = (offerItemId: number) => {
-    setSelectedOfferId(offerItemId);
-  };
-
-  const onMouseClick = () => {
-    store.dispatch(resetAllOfferAction());
-    store.dispatch(fetchOfferAction(selectedOfferId));
-    store.dispatch(fetchNearbyOfferAction(selectedOfferId));
-    store.dispatch(fetchCommentsAction(selectedOfferId));
-  };
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
@@ -46,9 +29,6 @@ function App(): JSX.Element {
           element={
             <MainScreen
               offers={offers}
-              onOfferItemHover={onOfferItemHover}
-              onMouseClick={onMouseClick}
-              selectedOfferId={selectedOfferId}
             />
           }
         />
@@ -68,18 +48,10 @@ function App(): JSX.Element {
         />
         <Route path={AppRoute.Offer}>
           <Route index
-            element={
-              <PropertyScreen
-                onMouseClick={() => null}
-              />
-            }
+            element={<PropertyScreen />}
           />
           <Route path=':id'
-            element={
-              <PropertyScreen
-                onMouseClick={() => null}
-              />
-            }
+            element={<PropertyScreen />}
           />
         </Route>
         <Route
