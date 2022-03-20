@@ -1,6 +1,11 @@
 import {useState} from 'react';
+import {useAppSelector} from '../../hooks/index';
+import {isUserAuth} from '../../offers';
 
 function ReviewsForm(): JSX.Element {
+  const {authorizationStatus} = useAppSelector((state) => state);
+  const isAuth = isUserAuth(authorizationStatus);
+
   const [formData, setFormData] = useState({
     review: '',
     rating: null,
@@ -12,7 +17,7 @@ function ReviewsForm(): JSX.Element {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" hidden={!isAuth}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
