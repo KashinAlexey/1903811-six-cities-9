@@ -12,7 +12,7 @@ import {Offer} from '../../types/offer';
 import {useState} from 'react';
 import {store} from '../../store/index';
 import {isCheckedAuth} from '../../offers';
-import { fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
+import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
@@ -23,6 +23,7 @@ function App(): JSX.Element {
   const onOfferItemHover = (offerItemId: number) => {
     store.dispatch(fetchOfferAction(offerItemId));
     store.dispatch(fetchNearbyOfferAction(offerItemId));
+    store.dispatch(fetchCommentsAction(offerItemId));
     const currentOffer = store.getState().offer;
 
     setSelectedOffer(currentOffer);
@@ -65,8 +66,6 @@ function App(): JSX.Element {
           <Route index
             element={
               <PropertyScreen
-                selectedOffer={selectedOffer}
-                offers={offers}
                 onOfferItemHover={onOfferItemHover}
               />
             }
@@ -74,8 +73,6 @@ function App(): JSX.Element {
           <Route path=':id'
             element={
               <PropertyScreen
-                selectedOffer={selectedOffer}
-                offers={offers}
                 onOfferItemHover={onOfferItemHover}
               />
             }

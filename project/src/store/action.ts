@@ -5,6 +5,7 @@ export const Action = {
   ADD_OFFERS: 'ADD_OFFERS',
   LOAD_OFFER: 'LOAD_OFFER',
   LOAD_NEARBY_OFFERS: 'LOAD_NEARBY_OFFERS',
+  LOAD_COMMENTS: 'LOAD_COMMENTS',
   AUTHORIZATION: 'AUTHORIZATION',
 };
 
@@ -20,8 +21,12 @@ export const loadOfferAction = createAction(Action.LOAD_OFFER, (offer) => ({
   payload: offer,
 }));
 
-export const loadNearbyOfferAction = createAction(Action.LOAD_NEARBY_OFFERS, (offer) => ({
-  payload: offer,
+export const loadNearbyOfferAction = createAction(Action.LOAD_NEARBY_OFFERS, (nearbyOffers) => ({
+  payload: nearbyOffers,
+}));
+
+export const loadCommentsAction = createAction(Action.LOAD_COMMENTS, (comments) => ({
+  payload: comments,
 }));
 
 export const requireAuthorization = createAction(Action.AUTHORIZATION, (status) => ({

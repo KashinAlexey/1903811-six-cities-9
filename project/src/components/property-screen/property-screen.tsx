@@ -1,7 +1,5 @@
 import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
-import { reviews } from '../../mocks/reviews';
-import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import HeaderNav from '../header-nav/header-nav';
@@ -9,21 +7,20 @@ import {useAppSelector} from '../../hooks/index';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 type PropertyScreenProps = {
-  selectedOffer: Offer | undefined;
-  offers: Offers;
   onOfferItemHover: (OfferItemId: number) => void;
 }
 
 function PropertyScreen(props: PropertyScreenProps) {
-  const {selectedOffer, offers, onOfferItemHover} = props;
+  const {onOfferItemHover} = props;
+
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {offer, nearbyOffers, isOfferLoaded, isNearbyOffersLoaded} = useAppSelector((state) => state);
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
-  // eslint-disable-next-line no-console
-  console.log(selectedOffer, isOfferLoaded, offers);
 
-  if (!isOfferLoaded && !isNearbyOffersLoaded) {
+  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
+
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
+
+  if (!isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded) {
     return (
       <LoadingScreen />
     );
@@ -137,7 +134,7 @@ function PropertyScreen(props: PropertyScreenProps) {
                   </p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews}/>
+              <ReviewsList reviews={comments}/>
             </div>
           </div>
           <Map

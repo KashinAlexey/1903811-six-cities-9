@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {Offers} from '../types/offer';
-import {addOffersAction, requireAuthorization, loadOfferAction, loadNearbyOfferAction} from './action';
+import {addOffersAction, requireAuthorization, loadOfferAction, loadNearbyOfferAction, loadCommentsAction} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -34,11 +34,23 @@ export const fetchOfferAction = createAsyncThunk(
 );
 
 export const fetchNearbyOfferAction = createAsyncThunk(
-  'data/fetchOffer',
+  'data/fetcNearbyhOffers',
   async (id: number) => {
     try {
       const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
       store.dispatch(loadNearbyOfferAction(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchCommentsAction = createAsyncThunk(
+  'data/fetchComments',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offers>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(loadCommentsAction(data));
     } catch (error) {
       errorHandle(error);
     }

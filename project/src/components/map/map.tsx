@@ -40,7 +40,7 @@ function Map(props: MapProps): JSX.Element {
           lng: offer.location.longitude,
         });
 
-        marker
+        marker //TODO Неадекватное поведение маркера
           .setIcon(
             selectedOffer !== undefined && offer.id === selectedOffer.id
               ? currentCustomIcon

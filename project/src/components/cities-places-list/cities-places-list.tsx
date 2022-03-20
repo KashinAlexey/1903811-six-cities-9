@@ -11,7 +11,7 @@ function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
   const {offers, onOfferItemHover, listClassName} = props;
 
   const onMouseOver = (id: number) => {
-    onOfferItemHover(id);
+    onOfferItemHover(id); // TODO неадекватное поведение объектов рядом
   };
 
   const Cards = new Set();

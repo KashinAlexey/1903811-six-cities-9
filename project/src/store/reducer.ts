@@ -4,19 +4,22 @@ import {
   changeCityAction,
   requireAuthorization,
   loadOfferAction,
-  loadNearbyOfferAction
+  loadNearbyOfferAction,
+  loadCommentsAction
 } from './action';
 import { DEFAULT_CITY, AuthorizationStatus, EMPTY_OFFER } from '../const';
-import { City, Offer, Offers } from '../types/offer';
+import { City, Offer, Offers, Reviews } from '../types/offer';
 
 type InitialState = {
   city: City,
   offers: Offers,
   offer: Offer,
   nearbyOffers: Offers,
+  comments: Reviews,
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   isOfferLoaded: boolean,
+  isCommentsLoaded: boolean,
   isNearbyOffersLoaded: boolean,
 }
 
@@ -25,9 +28,11 @@ const initialState: InitialState = {
   offers: [],
   offer: EMPTY_OFFER,
   nearbyOffers: [],
+  comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   isOfferLoaded: false,
+  isCommentsLoaded: false,
   isNearbyOffersLoaded: false,
 };
 
@@ -46,6 +51,9 @@ const reducer = createReducer(initialState, (builder) => {
     }).addCase(loadNearbyOfferAction, (state, action) => {
       state.nearbyOffers = action.payload;
       state.isNearbyOffersLoaded = true;
+    }).addCase(loadCommentsAction, (state, action) => {
+      state.comments = action.payload;
+      state.isCommentsLoaded = true;
     });
 });
 
