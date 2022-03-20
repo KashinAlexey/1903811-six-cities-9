@@ -1,7 +1,7 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import { Offer, City, Offers} from '../../types/offer';
+import { City, Offers} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
@@ -15,12 +15,10 @@ import HeaderNav from '../header-nav/header-nav';
 
 type MainScreenProps = {
   offers: Offers;
-  onOfferItemHover: (OfferItemId: number) => void;
-  selectedOffer: Offer | undefined;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, onOfferItemHover, selectedOffer} = props;
+  const {offers} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
   const city = store.getState().city;
@@ -28,6 +26,8 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,
   );
+
+  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
 
   const [currentOffers, setCurrenOffers] = useState(getOffers(offers, city));
 
@@ -39,6 +39,10 @@ function MainScreen(props: MainScreenProps): JSX.Element {
     store.dispatch(changeCityAction(currentCity));
     setSelectedCity(currentCity);
     setCurrenOffers(getOffers(offers, currentCity));
+  };
+
+  const onOfferItemHover = (offerItemId: number) => {
+    setSelectedOfferId(offerItemId);
   };
 
   const onSortChange = (type: string) => {
@@ -82,7 +86,8 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             <div className="cities__right-section">
               <Map
                 offers={currentOffers}
-                selectedOffer={selectedOffer}
+                city={selectedCity}
+                selectedOfferId={selectedOfferId}
                 className={className}
               />
             </div>

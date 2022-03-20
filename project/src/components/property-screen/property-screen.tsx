@@ -1,24 +1,39 @@
 import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
-import { reviews } from '../../mocks/reviews';
-import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import {EMPTY_OFFER} from '../../const';
 import HeaderNav from '../header-nav/header-nav';
+import {useAppSelector} from '../../hooks/index';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {useParams} from 'react-router-dom';
+import {store} from '../../store/index';
+import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
+import { resetAllOfferAction } from '../../store/action';
+import {useEffect, useState} from 'react';
 
-type PropertyScreenProps = {
-  selectedOffer: Offer | undefined;
-  offers: Offers;
-  onOfferItemHover: (OfferItemId: number) => void;
-}
-
-function PropertyScreen(props: PropertyScreenProps) {
-  const {selectedOffer, offers, onOfferItemHover} = props;
+function PropertyScreen() {
+  const params = useParams();
+  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
+  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const offer = selectedOffer || EMPTY_OFFER;
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city} = offer;
+
+  useEffect(() => {
+    if (params.id && +params.id !== selectedOfferId) {
+      setSelectedOfferId(+params.id);
+      store.dispatch(resetAllOfferAction());
+      store.dispatch(fetchOfferAction(+params.id));
+      store.dispatch(fetchNearbyOfferAction(+params.id));
+      store.dispatch(fetchCommentsAction(+params.id));
+    }
+  }, [selectedOfferId, params]);
+
+  if (!isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">
@@ -128,11 +143,12 @@ function PropertyScreen(props: PropertyScreenProps) {
                   </p>
                 </div>
               </div>
-              <ReviewsList reviews={reviews}/>
+              <ReviewsList reviews={comments}/>
             </div>
           </div>
           <Map
-            offers={offers.slice(0, 3)}
+            offers={nearbyOffers}
+            city={city}
             className={className}
           />
         </section>
@@ -140,8 +156,8 @@ function PropertyScreen(props: PropertyScreenProps) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CitiesPlacesList
-              offers={offers.slice(0, 3)}
-              onOfferItemHover={onOfferItemHover}
+              offers={nearbyOffers}
+              onOfferItemHover={() => null}
               listClassName={listClassName}
             />
           </section>
