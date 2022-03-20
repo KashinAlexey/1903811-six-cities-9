@@ -4,8 +4,9 @@ import { reviews } from '../../mocks/reviews';
 import { Offer, Offers } from '../../types/offer';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import {EMPTY_OFFER} from '../../const';
 import HeaderNav from '../header-nav/header-nav';
+import {useAppSelector} from '../../hooks/index';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type PropertyScreenProps = {
   selectedOffer: Offer | undefined;
@@ -17,8 +18,16 @@ function PropertyScreen(props: PropertyScreenProps) {
   const {selectedOffer, offers, onOfferItemHover} = props;
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const offer = selectedOffer || EMPTY_OFFER;
+  const {offer, isOfferLoaded} = useAppSelector((state) => state);
   const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
+  // eslint-disable-next-line no-console
+  console.log(selectedOffer, isOfferLoaded);
+
+  if (!isOfferLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">

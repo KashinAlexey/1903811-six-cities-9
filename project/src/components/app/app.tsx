@@ -12,6 +12,7 @@ import {Offer} from '../../types/offer';
 import {useState} from 'react';
 import {store} from '../../store/index';
 import {isCheckedAuth} from '../../offers';
+import { fetchOfferAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
@@ -20,7 +21,11 @@ function App(): JSX.Element {
   const offers = store.getState().offers;
 
   const onOfferItemHover = (offerItemId: number) => {
-    const currentOffer = offers.find((offer) => offer.id === offerItemId);
+    //const currentOffer = offers.find((offer) => offer.id === offerItemId);
+    store.dispatch(fetchOfferAction(offerItemId));
+    // eslint-disable-next-line no-console
+    console.log(store.getState().offer);
+    const currentOffer = store.getState().offer;
 
     setSelectedOffer(currentOffer);
   };

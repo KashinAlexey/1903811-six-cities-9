@@ -23,7 +23,7 @@ export type Offer = {
   goods: string[]
   host: User
   id: number
-  images: [string]
+  images: string[]
   isFavorite: boolean
   isPremium: boolean
   location: Location

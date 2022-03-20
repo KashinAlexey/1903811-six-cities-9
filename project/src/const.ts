@@ -27,12 +27,12 @@ export const DEFAULT_CITY = {
 };
 
 export const EMPTY_OFFER = {
-  bedrooms: null,
+  bedrooms: 0,
   city: {
     location: {
-      latitude: null,
-      longitude: null,
-      zoom: null,
+      latitude: 0,
+      longitude: 0,
+      zoom: 0,
     },
     name: '',
   },
@@ -40,23 +40,23 @@ export const EMPTY_OFFER = {
   goods: [''],
   host: {
     avatarUrl: '',
-    id: null,
-    isPro: null,
+    id: 0,
+    isPro: false,
     name: '',
   },
-  id: null,
+  id: 0,
   images: [''],
-  isFavorite: null,
-  isPremium: null,
+  isFavorite: false,
+  isPremium: false,
   location: {
-    latitude: null,
-    longitude: null,
-    zoom: null,
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
   },
-  maxAdults: null,
+  maxAdults: 0,
   previewImage: '',
-  price: null,
-  rating: null,
+  price: 0,
+  rating: 0,
   title: '',
   type: '',
 };
