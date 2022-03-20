@@ -1,13 +1,14 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
-import {Offers} from '../types/offer';
+import {Offers, Reviews} from '../types/offer';
 import {addOffersAction, requireAuthorization, loadOfferAction, loadNearbyOfferAction, loadCommentsAction} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {errorHandle} from '../services/error-handle';
+import { UserComment } from '../types/user-comment';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -50,6 +51,18 @@ export const fetchCommentsAction = createAsyncThunk(
   async (id: number) => {
     try {
       const {data} = await api.get<Offers>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(loadCommentsAction(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchCommentAction = createAsyncThunk(
+  'data/fetchComment',
+  async ({comment, rating, id}: UserComment) => {
+    try {
+      const {data} = await api.post<Reviews>(`${APIRoute.Comments}/${id}`, {comment, rating});
       store.dispatch(loadCommentsAction(data));
     } catch (error) {
       errorHandle(error);

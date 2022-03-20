@@ -70,6 +70,7 @@ export const DEFAULT_ICON = {
 
 export const ICON_SIZE = 40;
 export const ICON_ANCHER = 20;
+export const REVIEW_LENGTH = 50;
 
 export enum HTTP_CODE {
   BAD_REQUEST = 400,
