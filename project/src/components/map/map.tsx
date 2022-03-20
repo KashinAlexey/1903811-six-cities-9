@@ -1,7 +1,7 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import useMap from '../../hooks/useMap';
-import {Offer, Offers} from '../../types/offer';
+import {Offers} from '../../types/offer';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 import 'leaflet/dist/leaflet.css';
 import {ICON_SIZE, ICON_ANCHER} from '../../const';
@@ -9,7 +9,7 @@ import {store} from '../../store/index';
 
 type MapProps = {
   offers: Offers;
-  selectedOffer?: Offer | undefined;
+  selectedOfferId?: number;
   className: string;
 };
 
@@ -26,7 +26,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const {offers, selectedOffer, className} = props;
+  const {offers, selectedOfferId, className} = props;
   const city = store.getState().city;
 
   const mapRef = useRef(null);
@@ -40,16 +40,16 @@ function Map(props: MapProps): JSX.Element {
           lng: offer.location.longitude,
         });
 
-        marker //TODO Неадекватное поведение маркера
+        marker
           .setIcon(
-            selectedOffer !== undefined && offer.id === selectedOffer.id
+            selectedOfferId !== undefined && offer.id === selectedOfferId
               ? currentCustomIcon
               : defaultCustomIcon,
           )
           .addTo(map);
       });
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOfferId]);
 
   return <section className={className} ref={mapRef}></section>;
 }

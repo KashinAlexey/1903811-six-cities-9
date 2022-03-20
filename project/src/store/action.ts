@@ -7,7 +7,10 @@ export const Action = {
   LOAD_NEARBY_OFFERS: 'LOAD_NEARBY_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
   AUTHORIZATION: 'AUTHORIZATION',
+  RESET_OFFER: 'RESET_OFFER',
 };
+
+export const resetAllOfferAction = createAction(Action.RESET_OFFER);
 
 export const changeCityAction = createAction(Action.CHANGE_CITY, (city) => ({
   payload: city,

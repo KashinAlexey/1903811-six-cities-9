@@ -7,11 +7,11 @@ import {useAppSelector} from '../../hooks/index';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 type PropertyScreenProps = {
-  onOfferItemHover: (OfferItemId: number) => void;
+  onMouseClick: (OfferItemId: number) => void;
 }
 
 function PropertyScreen(props: PropertyScreenProps) {
-  const {onOfferItemHover} = props;
+  const {onMouseClick} = props;
 
   const className = 'property__map map';
   const listClassName = 'near-places__list';
@@ -147,7 +147,8 @@ function PropertyScreen(props: PropertyScreenProps) {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CitiesPlacesList
               offers={nearbyOffers}
-              onOfferItemHover={onOfferItemHover}
+              onOfferItemHover={() => null}
+              onMouseClick={onMouseClick}
               listClassName={listClassName}
             />
           </section>

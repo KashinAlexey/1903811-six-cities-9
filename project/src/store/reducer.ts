@@ -5,7 +5,8 @@ import {
   requireAuthorization,
   loadOfferAction,
   loadNearbyOfferAction,
-  loadCommentsAction
+  loadCommentsAction,
+  resetAllOfferAction
 } from './action';
 import { DEFAULT_CITY, AuthorizationStatus, EMPTY_OFFER } from '../const';
 import { City, Offer, Offers, Reviews } from '../types/offer';
@@ -54,6 +55,13 @@ const reducer = createReducer(initialState, (builder) => {
     }).addCase(loadCommentsAction, (state, action) => {
       state.comments = action.payload;
       state.isCommentsLoaded = true;
+    }).addCase(resetAllOfferAction, (state) => {
+      state.comments = [];
+      state.isCommentsLoaded = false;
+      state.nearbyOffers = [];
+      state.isNearbyOffersLoaded = false;
+      state.offer = EMPTY_OFFER;
+      state.isOfferLoaded = false;
     });
 });
 

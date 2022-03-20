@@ -4,14 +4,15 @@ import CitiesPlacesCard from '../cities-places-card/cities-places-card';
 type CitiesPlacesListProps = {
   offers: Offers;
   onOfferItemHover: (OfferItemId: number) => void;
+  onMouseClick: (OfferItemId: number) => void;
   listClassName: string;
 }
 
 function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
-  const {offers, onOfferItemHover, listClassName} = props;
+  const {offers, onOfferItemHover, onMouseClick, listClassName} = props;
 
   const onMouseOver = (id: number) => {
-    onOfferItemHover(id); // TODO неадекватное поведение объектов рядом
+    onOfferItemHover(id);
   };
 
   const Cards = new Set();
@@ -21,6 +22,7 @@ function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
         key={offers[number].id.toString()}
         offer={offers[number]}
         onMouseOver={onMouseOver}
+        onMouseClick={onMouseClick}
       />);
   }
 

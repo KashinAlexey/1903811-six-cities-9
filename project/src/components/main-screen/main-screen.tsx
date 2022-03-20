@@ -1,7 +1,7 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import { Offer, City, Offers} from '../../types/offer';
+import { City, Offers} from '../../types/offer';
 import {useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
@@ -16,11 +16,12 @@ import HeaderNav from '../header-nav/header-nav';
 type MainScreenProps = {
   offers: Offers;
   onOfferItemHover: (OfferItemId: number) => void;
-  selectedOffer: Offer | undefined;
+  onMouseClick: (OfferItemId: number) => void;
+  selectedOfferId: number;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-  const {offers, onOfferItemHover, selectedOffer} = props;
+  const {offers, onOfferItemHover, onMouseClick, selectedOfferId} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
   const city = store.getState().city;
@@ -76,13 +77,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <CitiesPlacesList
                 offers={currentOffers}
                 onOfferItemHover={onOfferItemHover}
+                onMouseClick={onMouseClick}
                 listClassName={listClassName}
               />
             </section>
             <div className="cities__right-section">
               <Map
                 offers={currentOffers}
-                selectedOffer={selectedOffer}
+                selectedOfferId={selectedOfferId}
                 className={className}
               />
             </div>
