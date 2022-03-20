@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+import {AppRoute} from '../const';
 
 export const Action = {
   CHANGE_CITY: 'CHANGE_CITY',
@@ -35,3 +36,5 @@ export const loadCommentsAction = createAction(Action.LOAD_COMMENTS, (comments) 
 export const requireAuthorization = createAction(Action.AUTHORIZATION, (status) => ({
   payload: status,
 }));
+
+export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
