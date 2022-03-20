@@ -18,12 +18,12 @@ function PropertyScreen(props: PropertyScreenProps) {
   const {selectedOffer, offers, onOfferItemHover} = props;
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {offer, isOfferLoaded} = useAppSelector((state) => state);
+  const {offer, nearbyOffers, isOfferLoaded, isNearbyOffersLoaded} = useAppSelector((state) => state);
   const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
   // eslint-disable-next-line no-console
-  console.log(selectedOffer, isOfferLoaded);
+  console.log(selectedOffer, isOfferLoaded, offers);
 
-  if (!isOfferLoaded) {
+  if (!isOfferLoaded && !isNearbyOffersLoaded) {
     return (
       <LoadingScreen />
     );
@@ -141,7 +141,7 @@ function PropertyScreen(props: PropertyScreenProps) {
             </div>
           </div>
           <Map
-            offers={offers.slice(0, 3)}
+            offers={nearbyOffers}
             className={className}
           />
         </section>
@@ -149,7 +149,7 @@ function PropertyScreen(props: PropertyScreenProps) {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <CitiesPlacesList
-              offers={offers.slice(0, 3)}
+              offers={nearbyOffers}
               onOfferItemHover={onOfferItemHover}
               listClassName={listClassName}
             />
