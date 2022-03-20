@@ -17,7 +17,7 @@ function PropertyScreen() {
   const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host} = offer;
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city} = offer;
 
   useEffect(() => {
     if (params.id && +params.id !== selectedOfferId) {
@@ -148,6 +148,7 @@ function PropertyScreen() {
           </div>
           <Map
             offers={nearbyOffers}
+            city={city}
             className={className}
           />
         </section>
