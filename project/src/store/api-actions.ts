@@ -3,7 +3,7 @@ import {api} from '../store';
 import {store} from '../store';
 import {Offers, Reviews} from '../types/offer';
 import {addOffersAction, requireAuthorization, loadOfferAction, loadNearbyOfferAction, loadCommentsAction, loadFavoritesAction, changeFavoriteAction} from './action';
-import {saveToken, dropToken} from '../services/token';
+import {saveToken, dropToken, saveMail, dropMail} from '../services/token';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
@@ -115,6 +115,7 @@ export const loginAction = createAsyncThunk(
     try {
       const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
+      saveMail(email);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       errorHandle(error);
@@ -129,6 +130,7 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
+      dropMail();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
       errorHandle(error);

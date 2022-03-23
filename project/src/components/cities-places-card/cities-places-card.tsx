@@ -2,7 +2,7 @@ import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import { store } from '../../store';
 import { fetchSetIsFavoriteAction } from '../../store/api-actions';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
@@ -58,4 +58,4 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   );
 }
 
-export default CitiesPlacesCard;
+export default memo(CitiesPlacesCard, (prevProps, nextProps) => prevProps.offer.isFavorite === nextProps.offer.isFavorite);

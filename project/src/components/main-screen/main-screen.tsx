@@ -2,7 +2,7 @@ import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
 import { City, Offers} from '../../types/offer';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
@@ -33,13 +33,15 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
   const offersCount = currentOffers.length;
 
-  const onListItemHover = (listItemName: string) => {
+  const onListItemHover = useCallback((listItemName: string) => {
     const currentCity = CITIES.find((_city) => _city.name === listItemName) || DEFAULT_CITY;
 
-    store.dispatch(changeCityAction(currentCity));
-    setSelectedCity(currentCity);
-    setCurrenOffers(getOffers(offers, currentCity));
-  };
+    if (selectedCity.name !== currentCity.name) {
+      store.dispatch(changeCityAction(currentCity));
+      setSelectedCity(currentCity);
+      setCurrenOffers(getOffers(offers, currentCity));
+    }
+  }, [offers, selectedCity.name]);
 
   const onOfferItemHover = (offerItemId: number) => {
     setSelectedOfferId(offerItemId);

@@ -1,6 +1,5 @@
 import Logo from '../logo/logo';
 import Favorites from '../favorites/favorites';
-//import {Offers} from '../../types/offer';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -8,7 +7,8 @@ import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 function FavoritesScreen(): JSX.Element {
-  //const {offers} = props;
+  // eslint-disable-next-line no-console
+  console.log('<FavoritesScreen />');
 
   const {favorites, isFavoritesLoaded} = useAppSelector((state) => state);
 
@@ -16,10 +16,9 @@ function FavoritesScreen(): JSX.Element {
     store.dispatch(fetchFavoritesAction());
   }, []);
 
-
   if (!isFavoritesLoaded) {
     return (
-      <LoadingScreen />
+      <LoadingScreen isDataLoaded={!isFavoritesLoaded}/>
     );
   }
 

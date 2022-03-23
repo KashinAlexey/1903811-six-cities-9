@@ -30,8 +30,10 @@ function PropertyScreen() {
   }, [selectedOfferId, params]);
 
   if (!isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded) {
+    const isLoaded = !isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded;
+
     return (
-      <LoadingScreen />
+      <LoadingScreen isDataLoaded={isLoaded}/>
     );
   }
 

@@ -1,5 +1,5 @@
 import {Cities, City} from '../../types/offer';
-import {MouseEvent} from 'react';
+import {memo, MouseEvent} from 'react';
 import {Link} from 'react-router-dom';
 
 type LocationsListProps = {
@@ -38,4 +38,4 @@ function LocationsList(props: LocationsListProps): JSX.Element {
   );
 }
 
-export default LocationsList;
+export default memo(LocationsList, (prevProps, nextProps) => prevProps.selectedCity === nextProps.selectedCity);

@@ -19,7 +19,7 @@ function App(): JSX.Element {
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
-      <LoadingScreen />
+      <LoadingScreen isDataLoaded={!isDataLoaded}/>
     );
   }
 
