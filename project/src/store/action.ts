@@ -7,6 +7,8 @@ export const Action = {
   LOAD_OFFER: 'LOAD_OFFER',
   LOAD_NEARBY_OFFERS: 'LOAD_NEARBY_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
+  LOAD_FAVORITES: 'LOAD_FAVORITES',
+  CHANGE_FAVORITE: 'CHANGE_FAVORITE',
   AUTHORIZATION: 'AUTHORIZATION',
   RESET_OFFER: 'RESET_OFFER',
 };
@@ -31,6 +33,14 @@ export const loadNearbyOfferAction = createAction(Action.LOAD_NEARBY_OFFERS, (ne
 
 export const loadCommentsAction = createAction(Action.LOAD_COMMENTS, (comments) => ({
   payload: comments,
+}));
+
+export const loadFavoritesAction = createAction(Action.LOAD_FAVORITES, (favorites) => ({
+  payload: favorites,
+}));
+
+export const changeFavoriteAction = createAction(Action.CHANGE_FAVORITE, (offer) => ({
+  payload: offer,
 }));
 
 export const requireAuthorization = createAction(Action.AUTHORIZATION, (status) => ({

@@ -1,13 +1,27 @@
 import Logo from '../logo/logo';
 import Favorites from '../favorites/favorites';
-import {Offers} from '../../types/offer';
+//import {Offers} from '../../types/offer';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-}
+function FavoritesScreen(): JSX.Element {
+  //const {offers} = props;
 
-function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
-  const {offers} = props;
+  const {favorites, isFavoritesLoaded} = useAppSelector((state) => state);
+
+  useEffect(() => {
+    store.dispatch(fetchFavoritesAction());
+  }, []);
+
+
+  if (!isFavoritesLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">
@@ -37,7 +51,7 @@ function FavoritesScreen(props: FavoritesScreenProps): JSX.Element {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <Favorites offers={offers} />
+          <Favorites offers={favorites} />
         </div>
       </main>
       <footer className="footer container">

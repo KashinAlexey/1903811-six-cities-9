@@ -6,7 +6,9 @@ import {
   loadOfferAction,
   loadNearbyOfferAction,
   loadCommentsAction,
-  resetAllOfferAction
+  resetAllOfferAction,
+  loadFavoritesAction,
+  changeFavoriteAction
 } from './action';
 import { DEFAULT_CITY, AuthorizationStatus, EMPTY_OFFER } from '../const';
 import { City, Offer, Offers, Reviews } from '../types/offer';
@@ -16,12 +18,14 @@ type InitialState = {
   offers: Offers,
   offer: Offer,
   nearbyOffers: Offers,
+  favorites: Offers,
   comments: Reviews,
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
   isOfferLoaded: boolean,
   isCommentsLoaded: boolean,
   isNearbyOffersLoaded: boolean,
+  isFavoritesLoaded: boolean,
 }
 
 const initialState: InitialState = {
@@ -29,12 +33,14 @@ const initialState: InitialState = {
   offers: [],
   offer: EMPTY_OFFER,
   nearbyOffers: [],
+  favorites: [],
   comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   isOfferLoaded: false,
   isCommentsLoaded: false,
   isNearbyOffersLoaded: false,
+  isFavoritesLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -55,6 +61,9 @@ const reducer = createReducer(initialState, (builder) => {
     }).addCase(loadCommentsAction, (state, action) => {
       state.comments = action.payload;
       state.isCommentsLoaded = true;
+    }).addCase(loadFavoritesAction, (state, action) => {
+      state.favorites = action.payload;
+      state.isFavoritesLoaded = true;
     }).addCase(resetAllOfferAction, (state) => {
       state.comments = [];
       state.isCommentsLoaded = false;
@@ -62,6 +71,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.isNearbyOffersLoaded = false;
       state.offer = EMPTY_OFFER;
       state.isOfferLoaded = false;
+    }).addCase(changeFavoriteAction, (state, action) => {
+      const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+      state.offers = [...state.offers.slice(0, index), action.payload, ...state.offers.slice(index + 1)];
     });
 });
 
