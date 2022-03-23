@@ -8,7 +8,7 @@ import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
 import { changeCityAction } from '../../store/action';
 import { getOffers } from '../../offers';
-import {CITIES} from '../../mocks/cities';
+import {CITIES} from '../../const';
 import Sort from '../sort/sort';
 import { getSortedData } from '../../sort';
 import HeaderNav from '../header-nav/header-nav';
