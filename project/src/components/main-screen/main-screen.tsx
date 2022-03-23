@@ -6,7 +6,7 @@ import {useCallback, useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
-import { changeCityAction } from '../../store/action';
+import { changeCityAction } from '../../store/app-process/app-process';
 import { getOffers } from '../../offers';
 import {CITIES} from '../../const';
 import Sort from '../sort/sort';
@@ -21,7 +21,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
-  const city = store.getState().city;
+  const city = store.getState().PROCESS.city;
 
   const [selectedCity, setSelectedCity] = useState<City>(
     DEFAULT_CITY,

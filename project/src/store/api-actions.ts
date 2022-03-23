@@ -2,7 +2,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {Offers, Reviews} from '../types/offer';
-import {addOffersAction, requireAuthorization, loadOfferAction, loadNearbyOfferAction, loadCommentsAction, loadFavoritesAction, changeFavoriteAction} from './action';
 import {saveToken, dropToken, saveMail, dropMail} from '../services/token';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -10,6 +9,9 @@ import {UserData} from '../types/user-data';
 import {errorHandle} from '../services/error-handle';
 import { UserComment } from '../types/user-comment';
 import { PostFavorite } from '../types/post-favorite';
+import { addOffersAction, changeFavoriteAction, loadFavoritesAction } from './app-global-data/app-global-data';
+import { loadCommentsAction, loadNearbyOfferAction, loadOfferAction } from './app-local-data/app-local-data';
+import { requireAuthorization } from './user-process/user-process';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',

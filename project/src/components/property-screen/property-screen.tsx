@@ -8,13 +8,13 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import {useParams} from 'react-router-dom';
 import {store} from '../../store/index';
 import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
-import { resetAllOfferAction } from '../../store/action';
+import { resetAllOfferAction } from '../../store/app-local-data/app-local-data';
 import {useEffect, useState} from 'react';
 
 function PropertyScreen() {
   const params = useParams();
   const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
-  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector((state) => state);
+  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
   const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city} = offer;

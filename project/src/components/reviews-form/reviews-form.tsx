@@ -7,7 +7,8 @@ import { fetchCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/user-comment';
 
 function ReviewsForm(): JSX.Element {
-  const {authorizationStatus, offer} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {offer} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const isAuth = isUserAuth(authorizationStatus);
 
   const [formData, setFormData] = useState({

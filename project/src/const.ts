@@ -12,6 +12,13 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  globalData = 'GLOBAL_DATA',
+  localData = 'LOCAL_DATA',
+  process = 'PROCESS',
+  user = 'USER',
+}
+
 export const URL_MARKER_DEFAULT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 

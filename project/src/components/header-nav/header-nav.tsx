@@ -6,7 +6,7 @@ import { logoutAction } from '../../store/api-actions';
 import { getMail } from '../../services/token';
 
 function HeaderNav(): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const isAuth = isUserAuth(authorizationStatus);
   const userMail = getMail();
 

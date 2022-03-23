@@ -7,10 +7,7 @@ import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 
 function FavoritesScreen(): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('<FavoritesScreen />');
-
-  const {favorites, isFavoritesLoaded} = useAppSelector((state) => state);
+  const {favorites, isFavoritesLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
 
   useEffect(() => {
     store.dispatch(fetchFavoritesAction());
