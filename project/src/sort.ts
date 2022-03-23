@@ -1,10 +1,10 @@
 import { Offers } from './types/offer';
 
 export const SortType = {
-  priceHi: 'PriceHi',
-  priceLow: 'PriceLow',
-  ratingHi: 'RatingHi',
-  default: 'Default',
+  priceHi: 'Price: high to low',
+  priceLow: 'Price: low to high',
+  ratingHi: 'Top rated first',
+  default: 'Popular',
 };
 
 // Compare functions in arr.sort(foo)

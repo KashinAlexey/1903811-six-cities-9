@@ -1,5 +1,8 @@
 import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
+import { store } from '../../store';
+import { fetchSetIsFavoriteAction } from '../../store/api-actions';
+import { memo, useState } from 'react';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
@@ -8,7 +11,14 @@ type CitiesPlacesCardProps = {
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   const {offer, onMouseOver} = props;
-  const {isPremium, price, title, id} = offer;
+  const {isPremium, price, title, id, isFavorite} = offer;
+  const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
+
+  const changeIsFavorite = () => {
+    setIsChechedFavorite(!isChechedFavorite);
+    const status = isChechedFavorite ? 0 : 1;
+    store.dispatch(fetchSetIsFavoriteAction({id, status}));
+  };
 
   return (
     <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)}>
@@ -26,7 +36,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button onClick={() => changeIsFavorite()} className={`place-card__bookmark-button ${isChechedFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -48,4 +58,4 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   );
 }
 
-export default CitiesPlacesCard;
+export default memo(CitiesPlacesCard, (prevProps, nextProps) => prevProps.offer.isFavorite === nextProps.offer.isFavorite);

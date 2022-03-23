@@ -1,7 +1,16 @@
-function LoadingScreen(): JSX.Element {
+import { memo } from 'react';
+
+type LoadingScreenProps = {
+  isDataLoaded: boolean,
+}
+
+
+function LoadingScreen(props: LoadingScreenProps): JSX.Element {
+  const {isDataLoaded} = props;
+
   return (
-    <p>Loading ...</p>
+    <p>{isDataLoaded ? 'Loading ...': ''}</p>
   );
 }
 
-export default LoadingScreen;
+export default memo(LoadingScreen, (prevProps, nextProps) => prevProps.isDataLoaded === nextProps.isDataLoaded);

@@ -1,14 +1,14 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import LocationsList from '../locations-list/locations-list';
 import Logo from '../logo/logo';
-import { City, Offers} from '../../types/offer';
-import {useState} from 'react';
+import { Offers} from '../../types/offer';
+import {useCallback, useState} from 'react';
 import Map from '../map/map';
 import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
-import { changeCityAction } from '../../store/action';
+import { changeCityAction } from '../../store/app-process/app-process';
 import { getOffers } from '../../offers';
-import {CITIES} from '../../mocks/cities';
+import {CITIES} from '../../const';
 import Sort from '../sort/sort';
 import { getSortedData } from '../../sort';
 import HeaderNav from '../header-nav/header-nav';
@@ -21,11 +21,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers} = props;
   const className = 'cities__map map';
   const listClassName = 'cities__places-list';
-  const city = store.getState().city;
-
-  const [selectedCity, setSelectedCity] = useState<City>(
-    DEFAULT_CITY,
-  );
+  const city = store.getState().PROCESS.city;
 
   const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
 
@@ -33,13 +29,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
   const offersCount = currentOffers.length;
 
-  const onListItemHover = (listItemName: string) => {
+  const onListItemHover = useCallback((listItemName: string) => {
     const currentCity = CITIES.find((_city) => _city.name === listItemName) || DEFAULT_CITY;
 
-    store.dispatch(changeCityAction(currentCity));
-    setSelectedCity(currentCity);
-    setCurrenOffers(getOffers(offers, currentCity));
-  };
+    if (city.name !== currentCity.name) {
+      store.dispatch(changeCityAction(currentCity));
+      setCurrenOffers(getOffers(offers, currentCity));
+    }
+  }, [offers, city.name]);
 
   const onOfferItemHover = (offerItemId: number) => {
     setSelectedOfferId(offerItemId);
@@ -66,14 +63,14 @@ function MainScreen(props: MainScreenProps): JSX.Element {
           <LocationsList
             cities={CITIES}
             onListItemHover={onListItemHover}
-            selectedCity={selectedCity}
+            selectedCity={city}
           />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in {selectedCity.name}</b>
+              <b className="places__found">{offersCount} places to stay in {city.name}</b>
               <Sort
                 onSortChange={onSortChange}
               />
@@ -86,7 +83,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
             <div className="cities__right-section">
               <Map
                 offers={currentOffers}
-                city={selectedCity}
+                city={city}
                 selectedOfferId={selectedOfferId}
                 className={className}
               />
