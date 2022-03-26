@@ -1,8 +1,6 @@
-import Logo from '../logo/logo';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import HeaderNav from '../header-nav/header-nav';
 import {useAppSelector} from '../../hooks/index';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {useParams} from 'react-router-dom';
@@ -10,6 +8,7 @@ import {store} from '../../store/index';
 import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
 import { resetAllOfferAction } from '../../store/app-local-data/app-local-data';
 import {useEffect, useState} from 'react';
+import Header from '../header/header';
 
 function PropertyScreen() {
   const params = useParams();
@@ -39,15 +38,7 @@ function PropertyScreen() {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <HeaderNav />
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">

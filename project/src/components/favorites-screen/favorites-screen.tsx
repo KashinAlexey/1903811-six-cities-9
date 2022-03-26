@@ -1,10 +1,10 @@
-import Logo from '../logo/logo';
 import Favorites from '../favorites/favorites';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import Header from '../header/header';
 
 function FavoritesScreen(): JSX.Element {
   const {favorites, isFavoritesLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
@@ -19,32 +19,33 @@ function FavoritesScreen(): JSX.Element {
     );
   }
 
+  if (favorites.length === 0) {
+    return (
+      <div className="page page--favorites-empty">
+        <Header />
+        <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+              </div>
+            </section>
+          </div>
+        </main>
+        <footer className="footer">
+          <a className="footer__logo-link" href="main.html">
+            <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          </a>
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a href="#section" className="header__nav-link header__nav-link--profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a href="#section" className="header__nav-link">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <Favorites offers={favorites} />

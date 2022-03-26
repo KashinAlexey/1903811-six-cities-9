@@ -1,4 +1,5 @@
 import Logo from '../logo/logo';
+import {Link} from 'react-router-dom';
 import {useRef, FormEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
@@ -83,9 +84,9 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a href="#section" className="locations__item-link">
+              <Link to="" className="locations__item-link">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>
