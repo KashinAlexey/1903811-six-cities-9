@@ -1,3 +1,4 @@
+import { getSortedReviews } from '../../sort';
 import { Reviews } from '../../types/offer';
 import ReviewsForm from '../reviews-form/reviews-form';
 
@@ -9,11 +10,13 @@ function ReviewsList(props: ReviewsListProps) {
   const {reviews} = props;
   const reviewsCount = reviews.length;
 
+  const _reviews = getSortedReviews(reviews);
+
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCount}</span></h2>
       <ul className="reviews__list">
-        {reviews.map((review, index) => {
+        {_reviews.slice(0, 10).map((review, index) => {
           const keyValue = `${index}-${review.id}`;
           const date = new Date(review.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 

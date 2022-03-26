@@ -9,14 +9,23 @@ import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '.
 import { resetAllOfferAction } from '../../store/app-local-data/app-local-data';
 import {useEffect, useState} from 'react';
 import Header from '../header/header';
+import { isUserAuth } from '../../offers';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import { fetchSetIsFavoriteAction } from '../../store/api-actions';
 
 function PropertyScreen() {
+  // TODO Неадекватное поведение компонента при добавлении и удалении из Избранного
   const params = useParams();
   const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
   const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city, images} = offer;
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city, images, isFavorite, id} = offer;
+  const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.id && +params.id !== selectedOfferId) {
@@ -28,9 +37,20 @@ function PropertyScreen() {
     }
   }, [selectedOfferId, params]);
 
-  if (!isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded) {
-    const isLoaded = !isOfferLoaded && !isNearbyOffersLoaded && !isCommentsLoaded;
+  const changeIsFavorite = () => {
+    if (!isUserAuth(authorizationStatus)) {
+      navigate(AppRoute.Login);
+      return;
+    }
 
+    const status = isChechedFavorite ? 0 : 1;
+    store.dispatch(fetchSetIsFavoriteAction({id, status}));
+    setIsChechedFavorite(!isChechedFavorite);
+  };
+
+  const isLoaded = isOfferLoaded && isNearbyOffersLoaded && isCommentsLoaded;
+
+  if (!isLoaded) {
     return (
       <LoadingScreen isDataLoaded={isLoaded}/>
     );
@@ -66,7 +86,7 @@ function PropertyScreen() {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button onClick={() => changeIsFavorite()} className={`property__bookmark-button ${isChechedFavorite && isUserAuth(authorizationStatus) ? 'property__bookmark-button--active' : ''} button`} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -114,7 +134,7 @@ function PropertyScreen() {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
                     <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
@@ -134,8 +154,9 @@ function PropertyScreen() {
             </div>
           </div>
           <Map
-            offers={nearbyOffers}
+            offers={[...nearbyOffers, offer]}
             city={city}
+            selectedOfferId={id}
             className={className}
           />
         </section>

@@ -1,4 +1,4 @@
-import { Offers } from './types/offer';
+import { Offers, Reviews } from './types/offer';
 
 export const SortType = {
   priceHi: 'Price: high to low',
@@ -27,6 +27,14 @@ const sortNumber = (numberA: number, numberB: number, type: string) => {
   return type === 'Up'? weight ?? numberB - numberA : weight ?? numberA - numberB;
 };
 
+export const sortDate = (dayA: string, dayB: string, type: string) => {
+  const _dayA = Date.parse(dayA);
+  const _dayB = Date.parse(dayB);
+  const weight = getWeightForNull(_dayA, _dayB);
+
+  return type === 'Up'? weight ?? _dayB - _dayA : weight ?? _dayA - _dayB;
+};
+
 export const getSortedData = (data: Offers, sortType: string) => {
   let sortedData = data.slice();
 
@@ -47,4 +55,7 @@ export const getSortedData = (data: Offers, sortType: string) => {
   return sortedData;
 };
 
-
+export const getSortedReviews = (data: Reviews) => {
+  const sortedData = data.slice();
+  return sortedData.sort((dataA, dataB) => sortDate(dataA.date, dataB.date, 'Up'));
+};
