@@ -1,6 +1,6 @@
 import LocationsList from '../locations-list/locations-list';
 import { Offers} from '../../types/offer';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {DEFAULT_CITY} from '../../const';
 import {store} from '../../store/index';
 import { changeCityAction } from '../../store/app-process/app-process';
@@ -9,6 +9,7 @@ import {CITIES} from '../../const';
 import { getSortedData } from '../../sort';
 import Cities from '../cities/cities';
 import Header from '../header/header';
+import { resetFavoritesAction } from '../../store/app-global-data/app-global-data';
 
 type MainScreenProps = {
   offers: Offers;
@@ -17,8 +18,11 @@ type MainScreenProps = {
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers} = props;
   const city = store.getState().PROCESS.city;
-
   const [currentOffers, setCurrentOffers] = useState(getOffers(offers, city));
+
+  useEffect(() => {
+    store.dispatch(resetFavoritesAction());
+  }, []);
 
   const onListItemHover = useCallback((listItemName: string) => {
     const currentCity = CITIES.find((_city) => _city.name === listItemName) || DEFAULT_CITY;

@@ -25,7 +25,11 @@ export const appGlobalData = createSlice({
       const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
       state.offers = [...state.offers.slice(0, index), action.payload, ...state.offers.slice(index + 1)];
     },
+    resetFavoritesAction: (state) => {
+      state.isFavoritesLoaded = false;
+      state.favorites = [];
+    },
   },
 });
 
-export const {addOffersAction, loadFavoritesAction, changeFavoriteAction} = appGlobalData.actions;
+export const {addOffersAction, loadFavoritesAction, changeFavoriteAction, resetFavoritesAction} = appGlobalData.actions;

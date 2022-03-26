@@ -41,7 +41,6 @@ function ReviewsForm(): JSX.Element {
     });
   };
 
-
   return (
     <form
       onSubmit={(evt: FormEvent<HTMLFormElement>) => {

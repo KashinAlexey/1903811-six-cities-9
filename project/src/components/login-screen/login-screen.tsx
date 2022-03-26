@@ -6,10 +6,14 @@ import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {AppRoute} from '../../const';
 import { store } from '../../store';
+import { isUserAuth } from '../../offers';
+import { useAppSelector } from '../../hooks';
+import {useEffect} from 'react';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const navigate = useNavigate();
 
@@ -27,6 +31,12 @@ function LoginScreen(): JSX.Element {
       });
     }
   };
+
+  useEffect(() => {
+    if (isUserAuth(authorizationStatus)) {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus, navigate]);
 
   return (
     <div className="page page--gray page--login">

@@ -16,7 +16,7 @@ function PropertyScreen() {
   const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city} = offer;
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city, images} = offer;
 
   useEffect(() => {
     if (params.id && +params.id !== selectedOfferId) {
@@ -43,31 +43,25 @@ function PropertyScreen() {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
+              {images.slice(0,6).map((image, index) => {
+                const keyValue = `${index}-${image}`;
+                return (
+                  <div
+                    key={keyValue}
+                    className="property__image-wrapper"
+                  >
+                    <img className="property__image" src={image} alt="studio" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>{isPremium ? 'Premium' : ''}</span>
-              </div>
+              {isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div> : ''}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}

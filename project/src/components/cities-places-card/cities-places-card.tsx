@@ -3,6 +3,10 @@ import {Link} from 'react-router-dom';
 import { store } from '../../store';
 import { fetchSetIsFavoriteAction } from '../../store/api-actions';
 import { memo, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import { isUserAuth } from '../../offers';
+import {AppRoute} from '../../const';
+import { useAppSelector } from '../../hooks';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
@@ -11,10 +15,18 @@ type CitiesPlacesCardProps = {
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   const {offer, onMouseOver} = props;
-  const {isPremium, price, title, id, isFavorite} = offer;
+  const {isPremium, price, title, id, isFavorite, images} = offer;
   const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+
+  const navigate = useNavigate();
 
   const changeIsFavorite = () => {
+    if (!isUserAuth(authorizationStatus)) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
     setIsChechedFavorite(!isChechedFavorite);
     const status = isChechedFavorite ? 0 : 1;
     store.dispatch(fetchSetIsFavoriteAction({id, status}));
@@ -22,12 +34,13 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
 
   return (
     <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)}>
-      <div className="place-card__mark">
-        <span>{isPremium ? 'Premium' : ''}</span>
-      </div>
+      {isPremium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -36,7 +49,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button onClick={() => changeIsFavorite()} className={`place-card__bookmark-button ${isChechedFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
+          <button onClick={() => changeIsFavorite()} className={`place-card__bookmark-button ${isChechedFavorite && isUserAuth(authorizationStatus) ? 'place-card__bookmark-button--active' : ''} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

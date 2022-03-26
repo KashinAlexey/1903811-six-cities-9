@@ -85,7 +85,6 @@ export const fetchSetIsFavoriteAction = createAsyncThunk(
   },
 );
 
-
 export const fetchCommentAction = createAsyncThunk(
   'data/fetchComment',
   async ({comment, rating, id}: UserComment) => {
