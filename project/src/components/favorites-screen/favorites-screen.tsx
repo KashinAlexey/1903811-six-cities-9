@@ -5,6 +5,7 @@ import { store } from '../../store';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import Header from '../header/header';
+import Footer from '../footer/footer';
 
 function FavoritesScreen(): JSX.Element {
   const {favorites, isFavoritesLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
@@ -34,11 +35,7 @@ function FavoritesScreen(): JSX.Element {
             </section>
           </div>
         </main>
-        <footer className="footer">
-          <a className="footer__logo-link" href="main.html">
-            <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-          </a>
-        </footer>
+        <Footer />
       </div>
     );
   }
@@ -51,11 +48,7 @@ function FavoritesScreen(): JSX.Element {
           <Favorites offers={favorites} />
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }
