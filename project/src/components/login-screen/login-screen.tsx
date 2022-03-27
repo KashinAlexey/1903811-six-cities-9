@@ -1,42 +1,49 @@
 import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
+import {Link, Navigate } from 'react-router-dom';
 import {useRef, FormEvent} from 'react';
-import {useNavigate} from 'react-router-dom';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
-import {AppRoute} from '../../const';
 import { store } from '../../store';
 import { isUserAuth } from '../../offers';
 import { useAppSelector } from '../../hooks';
-import {useEffect} from 'react';
+import { toast } from 'react-toastify';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
-  const navigate = useNavigate();
-
   const onSubmit = (authData: AuthData) => {
     store.dispatch(loginAction(authData));
+    return (<Navigate to="/" />);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+    const login = loginRef.current !== null ? loginRef.current.value : '';
+    const password = passwordRef.current !== null ? passwordRef.current.value : '';
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(login)) {
+      toast.error('Email is invalid');
+      return;
     }
+
+    if (!/[a-zA-Z]+[0-9]/.test(password) || !/\d/.test(password) || password.includes(' ')) {
+      toast.error('Password is invalid');
+      return;
+    }
+
+    onSubmit({
+      login: login,
+      password: password,
+    });
+
   };
 
-  useEffect(() => {
-    if (isUserAuth(authorizationStatus)) {
-      navigate(AppRoute.Root);
-    }
-  }, [authorizationStatus, navigate]);
+  if (isUserAuth(authorizationStatus)) {
+    return (<Navigate to="/" />);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -59,7 +66,6 @@ function LoginScreen(): JSX.Element {
               onSubmit={(evt: FormEvent<HTMLFormElement>) => {
                 evt.preventDefault();
                 handleSubmit(evt);
-                navigate(AppRoute.Root);
               }}
             >
               <div className="login__input-wrapper form__input-wrapper">

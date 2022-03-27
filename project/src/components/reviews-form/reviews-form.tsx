@@ -1,5 +1,5 @@
 import {FormEvent, useState} from 'react';
-import { REVIEW_LENGTH } from '../../const';
+import { MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const';
 import {useAppSelector} from '../../hooks/index';
 import {isUserAuth} from '../../offers';
 import { store } from '../../store';
@@ -8,7 +8,6 @@ import { UserComment } from '../../types/user-comment';
 
 function ReviewsForm(): JSX.Element {
   // TODO Очистка рейтинга звезд после отправки формы
-  // TODO Текст коммента от 50 до 300 символов
   // TODO Проверить кол-во выставляемыз звезд
   // TODO 1.1.2.2 ТЗ
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
@@ -20,7 +19,7 @@ function ReviewsForm(): JSX.Element {
     rating: null,
   });
 
-  const isValid = formData.rating !== null && formData.review !== '' && formData.review.length <= REVIEW_LENGTH;
+  const isValid = formData.rating !== null && formData.review !== '' && formData.review.length <= MAX_REVIEW_LENGTH && formData.review.length >= MIN_REVIEW_LENGTH;
 
   const fieldChangeHandle = (evt: { target: { name: string; value: string; }; }) => {
     const {name, value} = evt.target;
