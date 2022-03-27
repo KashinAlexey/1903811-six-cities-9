@@ -18,7 +18,7 @@ type CitiesPlacesCardProps = {
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   const {offer, onMouseOver, placeClassName, imageClassName, cardClassName} = props;
-  const {isPremium, price, title, id, isFavorite, images} = offer;
+  const {isPremium, price, title, id, isFavorite, images, rating} = offer;
   const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
@@ -61,7 +61,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
