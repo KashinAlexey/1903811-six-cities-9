@@ -1,4 +1,4 @@
-import {Offers} from '../../types/offer';
+import { Offers } from '../../types/offer';
 import CitiesPlacesCard from '../cities-places-card/cities-places-card';
 
 type CitiesPlacesListProps = {

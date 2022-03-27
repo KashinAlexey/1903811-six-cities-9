@@ -1,4 +1,5 @@
-import { Offers, Reviews } from './types/offer';
+import { Offers } from './types/offer';
+import { Reviews } from './types/offer';
 
 export const SortType = {
   priceHi: 'Price: high to low',

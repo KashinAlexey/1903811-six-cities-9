@@ -1,29 +1,34 @@
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import {useAppSelector} from '../../hooks/index';
+import { useAppSelector } from '../../hooks/index';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {useParams} from 'react-router-dom';
-import {store} from '../../store/index';
-import { fetchCommentsAction, fetchNearbyOfferAction, fetchOfferAction } from '../../store/api-actions';
+import { useParams } from 'react-router-dom';
+import { store } from '../../store/index';
+import { fetchCommentsAction } from '../../store/api-actions';
+import { fetchNearbyOfferAction } from '../../store/api-actions';
+import { fetchOfferAction } from '../../store/api-actions';
 import { resetAllOfferAction } from '../../store/app-local-data/app-local-data';
-import {useEffect, useState} from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import Header from '../header/header';
 import { isUserAuth } from '../../offers';
-import {useNavigate} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { fetchSetIsFavoriteAction } from '../../store/api-actions';
 
 function PropertyScreen() {
-  // TODO Неадекватное поведение компонента при добавлении и удалении из Избранного
-  const params = useParams();
-  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
-  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const className = 'property__map map';
   const listClassName = 'near-places__list';
-  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city, images, isFavorite, id} = offer;
-  const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
+
+  const params = useParams();
+  const {offer, nearbyOffers, comments, isOfferLoaded, isNearbyOffersLoaded, isCommentsLoaded} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
+
+  const {isPremium, price, title, rating, goods, type, bedrooms, maxAdults, description, host, city, images, isFavorite, id} = offer;
+
+  const [selectedOfferId, setSelectedOfferId] = useState<number>(0);
+  const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
 
   const navigate = useNavigate();
 
@@ -37,14 +42,15 @@ function PropertyScreen() {
     }
   }, [selectedOfferId, params]);
 
-  const changeIsFavorite = () => {
+  const changeIsFavorite = async () => {
     if (!isUserAuth(authorizationStatus)) {
       navigate(AppRoute.Login);
       return;
     }
 
-    const status = isChechedFavorite ? 0 : 1;
-    store.dispatch(fetchSetIsFavoriteAction({id, status}));
+    const status = isFavorite ? 0 : 1;
+    await store.dispatch(fetchSetIsFavoriteAction({id, status}));
+    await store.dispatch(fetchOfferAction(id));
     setIsChechedFavorite(!isChechedFavorite);
   };
 
@@ -86,7 +92,7 @@ function PropertyScreen() {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button onClick={() => changeIsFavorite()} className={`property__bookmark-button ${isChechedFavorite && isUserAuth(authorizationStatus) ? 'property__bookmark-button--active' : ''} button`} type="button">
+                <button onClick={() => changeIsFavorite()} className={`property__bookmark-button ${isFavorite && isUserAuth(authorizationStatus) ? 'property__bookmark-button--active' : ''} button`} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

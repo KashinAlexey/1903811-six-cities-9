@@ -1,17 +1,22 @@
 import Logo from '../logo/logo';
-import {Link, Navigate } from 'react-router-dom';
-import {useRef, FormEvent} from 'react';
-import {loginAction} from '../../store/api-actions';
-import {AuthData} from '../../types/auth-data';
+import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { FormEvent } from 'react';
+import { useRef } from 'react';
+import { loginAction } from '../../store/api-actions';
+import { AuthData } from '../../types/auth-data';
 import { store } from '../../store';
-import { isUserAuth } from '../../offers';
+import { getRandomIntegerInclusive, isUserAuth } from '../../offers';
 import { useAppSelector } from '../../hooks';
 import { toast } from 'react-toastify';
+import { CITIES } from '../../const';
+import { changeCityAction } from '../../store/app-process/app-process';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const city = CITIES[getRandomIntegerInclusive(0, 5)];
 
   const onSubmit = (authData: AuthData) => {
     store.dispatch(loginAction(authData));
@@ -100,8 +105,12 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link to="" className="locations__item-link">
-                <span>Amsterdam</span>
+              <Link to="/" className="locations__item-link">
+                <span
+                  onClick={() => store.dispatch(changeCityAction(city))}
+                >
+                  {city.name}
+                </span>
               </Link>
             </div>
           </section>

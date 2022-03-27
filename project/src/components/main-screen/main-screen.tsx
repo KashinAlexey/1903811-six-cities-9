@@ -1,15 +1,18 @@
 import LocationsList from '../locations-list/locations-list';
 import { Offers} from '../../types/offer';
-import {useCallback, useEffect, useState} from 'react';
-import {DEFAULT_CITY} from '../../const';
-import {store} from '../../store/index';
+import { useCallback } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { DEFAULT_CITY } from '../../const';
+import { store } from '../../store/index';
 import { changeCityAction } from '../../store/app-process/app-process';
 import { getOffers } from '../../offers';
-import {CITIES} from '../../const';
+import { CITIES } from '../../const';
 import { getSortedData } from '../../sort';
 import Cities from '../cities/cities';
 import Header from '../header/header';
 import { resetFavoritesAction } from '../../store/app-global-data/app-global-data';
+import { useAppSelector } from '../../hooks';
 
 type MainScreenProps = {
   offers: Offers;
@@ -17,7 +20,7 @@ type MainScreenProps = {
 
 function MainScreen(props: MainScreenProps): JSX.Element {
   const {offers} = props;
-  const city = store.getState().PROCESS.city;
+  const {city} = useAppSelector(({PROCESS}) => PROCESS);
   const [currentOffers, setCurrentOffers] = useState(getOffers(offers, city));
 
   useEffect(() => {

@@ -1,6 +1,6 @@
-import {isUserAuth} from '../../offers';
-import {useAppSelector} from '../../hooks/index';
-import {Link} from 'react-router-dom';
+import { isUserAuth } from '../../offers';
+import { useAppSelector } from '../../hooks/index';
+import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { logoutAction } from '../../store/api-actions';
 import { getMail } from '../../services/token';

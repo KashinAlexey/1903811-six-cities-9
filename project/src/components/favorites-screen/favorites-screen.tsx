@@ -8,7 +8,6 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 
 function FavoritesScreen(): JSX.Element {
-  // TODO Изменить карточку избранного, 1.1.4 ТЗ
   const {favorites, isFavoritesLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
 
   useEffect(() => {

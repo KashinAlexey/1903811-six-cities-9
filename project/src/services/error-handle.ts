@@ -1,7 +1,8 @@
 import request from 'axios';
-import {toast} from 'react-toastify';
-import {ErrorType} from '../types/error';
-import {AppRoute, HTTP_CODE} from '../const';
+import { toast } from 'react-toastify';
+import { ErrorType } from '../types/error';
+import { AppRoute } from '../const';
+import { HTTP_CODE } from '../const';
 import { store } from '../store';
 import { redirectToRoute } from '../store/action';
 

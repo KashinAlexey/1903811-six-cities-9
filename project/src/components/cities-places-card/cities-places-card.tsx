@@ -1,12 +1,14 @@
-import {Offer} from '../../types/offer';
-import {Link} from 'react-router-dom';
-import { store } from '../../store';
+import { AppRoute } from '../../const';
+import { fetchFavoritesAction } from '../../store/api-actions';
 import { fetchSetIsFavoriteAction } from '../../store/api-actions';
-import { memo, useState } from 'react';
-import {useNavigate} from 'react-router-dom';
 import { isUserAuth } from '../../offers';
-import {AppRoute} from '../../const';
+import { Link } from 'react-router-dom';
+import { memo } from 'react';
+import { Offer } from '../../types/offer';
+import { store } from '../../store';
 import { useAppSelector } from '../../hooks';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type CitiesPlacesCardProps = {
   offer: Offer;
@@ -19,12 +21,14 @@ type CitiesPlacesCardProps = {
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   const {offer, onMouseOver, placeClassName, imageClassName, cardClassName} = props;
   const {isPremium, price, title, id, isFavorite, images, rating} = offer;
+
   const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
+
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const navigate = useNavigate();
 
-  const changeIsFavorite = () => {
+  const changeIsFavorite = async () => {
     if (!isUserAuth(authorizationStatus)) {
       navigate(AppRoute.Login);
       return;
@@ -32,7 +36,8 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
 
     setIsChechedFavorite(!isChechedFavorite);
     const status = isChechedFavorite ? 0 : 1;
-    store.dispatch(fetchSetIsFavoriteAction({id, status}));
+    await store.dispatch(fetchSetIsFavoriteAction({id, status}));
+    await store.dispatch(fetchFavoritesAction());
   };
 
   return (

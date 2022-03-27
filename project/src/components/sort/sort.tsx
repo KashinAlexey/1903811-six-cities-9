@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { SortType } from '../../sort';
 
 type SortProps = {

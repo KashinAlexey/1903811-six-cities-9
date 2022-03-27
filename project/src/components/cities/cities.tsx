@@ -1,8 +1,9 @@
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
-import { City, Offers} from '../../types/offer';
-import {useState} from 'react';
+import { City } from '../../types/offer';
 import Map from '../map/map';
+import { Offers} from '../../types/offer';
 import Sort from '../sort/sort';
+import { useState } from 'react';
 
 type CitiesProps = {
   city: City,

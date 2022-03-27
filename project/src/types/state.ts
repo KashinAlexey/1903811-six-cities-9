@@ -1,5 +1,8 @@
 import {store} from '../store/index.js';
-import { City, Offer, Offers, Reviews } from '../types/offer';
+import { City } from '../types/offer';
+import { Offer } from '../types/offer';
+import { Offers } from '../types/offer';
+import { Reviews } from '../types/offer';
 import { AuthorizationStatus } from '../const';
 
 export type AppGlobalData = {

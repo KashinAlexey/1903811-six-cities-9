@@ -1,5 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import { EMPTY_OFFER, NameSpace } from '../../const';
+import { createSlice } from '@reduxjs/toolkit';
+import { EMPTY_OFFER } from '../../const';
+import { NameSpace } from '../../const';
 import {AppLocalData} from '../../types/state';
 
 const initialState: AppLocalData = {

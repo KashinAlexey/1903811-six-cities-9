@@ -7,9 +7,6 @@ import { fetchCommentAction } from '../../store/api-actions';
 import { UserComment } from '../../types/user-comment';
 
 function ReviewsForm(): JSX.Element {
-  // TODO Очистка рейтинга звезд после отправки формы
-  // TODO Проверить кол-во выставляемыз звезд
-  // TODO 1.1.2.2 ТЗ
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const {offer} = useAppSelector(({LOCAL_DATA}) => LOCAL_DATA);
   const isAuth = isUserAuth(authorizationStatus);
