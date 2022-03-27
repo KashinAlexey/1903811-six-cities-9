@@ -9,6 +9,9 @@ type CitiesPlacesListProps = {
 
 function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
   const {offers, onOfferItemHover, listClassName} = props;
+  const placeClassName = 'cities__place-card';
+  const imageClassName = 'cities__image-wrapper';
+  const cardClassName = '';
 
   const onMouseOver = (id: number) => {
     onOfferItemHover(id);
@@ -21,6 +24,9 @@ function CitiesPlacesList(props: CitiesPlacesListProps): JSX.Element {
         key={offers[number].id.toString()}
         offer={offers[number]}
         onMouseOver={onMouseOver}
+        placeClassName={placeClassName}
+        imageClassName={imageClassName}
+        cardClassName={cardClassName}
       />);
   }
 

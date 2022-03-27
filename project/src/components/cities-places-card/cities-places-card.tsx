@@ -11,10 +11,13 @@ import { useAppSelector } from '../../hooks';
 type CitiesPlacesCardProps = {
   offer: Offer;
   onMouseOver: (id: number) => void;
+  placeClassName: string;
+  imageClassName: string;
+  cardClassName: string;
 }
 
 function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
-  const {offer, onMouseOver} = props;
+  const {offer, onMouseOver, placeClassName, imageClassName, cardClassName} = props;
   const {isPremium, price, title, id, isFavorite, images} = offer;
   const [isChechedFavorite, setIsChechedFavorite] = useState(isFavorite);
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
@@ -33,17 +36,17 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={() => onMouseOver(id)}>
+    <article className={`${placeClassName} place-card`} onMouseOver={() => onMouseOver(id)}>
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${imageClassName} place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardClassName} lace-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

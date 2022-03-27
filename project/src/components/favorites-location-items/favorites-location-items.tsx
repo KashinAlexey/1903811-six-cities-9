@@ -1,5 +1,6 @@
-import FavoriteCitiesCard from '../favorite-cities-card/favorite-cities-card';
+//import FavoriteCitiesCard from '../favorite-cities-card/favorite-cities-card';
 import {Offers} from '../../types/offer';
+import CitiesPlacesCard from '../cities-places-card/cities-places-card';
 
 type FavoritesLocationItemsProps = {
   locations: Offers;
@@ -7,14 +8,21 @@ type FavoritesLocationItemsProps = {
 
 function FavoritesLocationItems(props: FavoritesLocationItemsProps): JSX.Element {
   const {locations} = props;
+  const placeClassName = 'favorites__card';
+  const imageClassName = 'favorites__image-wrapper';
+  const cardClassName = 'favorites__card-info';
   const name = locations[0].city.name;
 
   const Cards = new Set();
   for (let number = 0; number < locations.length; number++){
     Cards.add(
-      <FavoriteCitiesCard
+      <CitiesPlacesCard
         key={locations[number].id.toString()}
         offer={locations[number]}
+        onMouseOver={() => null}
+        placeClassName={placeClassName}
+        imageClassName={imageClassName}
+        cardClassName={cardClassName}
       />);
   }
 
