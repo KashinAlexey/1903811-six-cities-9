@@ -6,7 +6,6 @@ type FavoritesListProps = {
 }
 
 function FavoritesList(props: FavoritesListProps): JSX.Element {
-
   const {locations} = props;
 
   const Cards = new Set();

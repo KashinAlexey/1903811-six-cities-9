@@ -1,16 +1,25 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {api} from '../store';
-import {store} from '../store';
-import {Offers, Reviews} from '../types/offer';
-import {saveToken, dropToken, saveMail, dropMail} from '../services/token';
-import {APIRoute, AuthorizationStatus} from '../const';
-import {AuthData} from '../types/auth-data';
-import {UserData} from '../types/user-data';
-import {errorHandle} from '../services/error-handle';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { api} from '../store';
+import { store } from '../store';
+import { Offers } from '../types/offer';
+import { Reviews } from '../types/offer';
+import { saveToken } from '../services/token';
+import { dropToken } from '../services/token';
+import { saveMail } from '../services/token';
+import { dropMail } from '../services/token';
+import { APIRoute } from '../const';
+import { AuthorizationStatus } from '../const';
+import { AuthData } from '../types/auth-data';
+import { UserData } from '../types/user-data';
+import { errorHandle } from '../services/error-handle';
 import { UserComment } from '../types/user-comment';
 import { PostFavorite } from '../types/post-favorite';
-import { addOffersAction, changeFavoriteAction, loadFavoritesAction } from './app-global-data/app-global-data';
-import { loadCommentsAction, loadNearbyOfferAction, loadOfferAction } from './app-local-data/app-local-data';
+import { addOffersAction } from './app-global-data/app-global-data';
+import { changeFavoriteAction } from './app-global-data/app-global-data';
+import { loadFavoritesAction } from './app-global-data/app-global-data';
+import { loadCommentsAction } from './app-local-data/app-local-data';
+import { loadNearbyOfferAction } from './app-local-data/app-local-data';
+import { loadOfferAction } from './app-local-data/app-local-data';
 import { requireAuthorization } from './user-process/user-process';
 
 export const fetchOffersAction = createAsyncThunk(
@@ -84,7 +93,6 @@ export const fetchSetIsFavoriteAction = createAsyncThunk(
     }
   },
 );
-
 
 export const fetchCommentAction = createAsyncThunk(
   'data/fetchComment',

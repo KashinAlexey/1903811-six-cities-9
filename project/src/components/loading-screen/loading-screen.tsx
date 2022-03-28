@@ -4,7 +4,6 @@ type LoadingScreenProps = {
   isDataLoaded: boolean,
 }
 
-
 function LoadingScreen(props: LoadingScreenProps): JSX.Element {
   const {isDataLoaded} = props;
 

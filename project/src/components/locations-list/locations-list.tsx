@@ -1,6 +1,8 @@
-import {Cities, City} from '../../types/offer';
-import {memo, MouseEvent} from 'react';
-import {Link} from 'react-router-dom';
+import { Cities } from '../../types/offer';
+import { City } from '../../types/offer';
+import { MouseEvent } from 'react';
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 
 type LocationsListProps = {
   cities: Cities;

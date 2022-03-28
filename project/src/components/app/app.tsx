@@ -1,24 +1,21 @@
-import {Route, Routes} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/index';
-import {AppRoute} from '../../const';
-import MainScreen from '../main-screen/main-screen';
+import { AppRoute } from '../../const';
+import browserHistory from '../../browser-history';
+import { isCheckedAuth } from '../../offers';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
+import HistoryRouter from '../history-route/history-route';
 import LoginScreen from '../login-screen/login-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
+import MainScreen from '../main-screen/main-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
-import LoadingScreen from '../loading-screen/loading-screen';
-import {store} from '../../store/index';
-import {isCheckedAuth} from '../../offers';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
+import { Route } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/index';
 
 function App(): JSX.Element {
   const {authorizationStatus} = useAppSelector(({USER}) => USER);
-
-  const {isDataLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
-
-  const offers = store.getState().GLOBAL_DATA.offers;
+  const {offers, isDataLoaded} = useAppSelector(({GLOBAL_DATA}) => GLOBAL_DATA);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

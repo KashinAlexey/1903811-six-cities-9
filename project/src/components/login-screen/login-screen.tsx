@@ -1,31 +1,54 @@
 import Logo from '../logo/logo';
-import {useRef, FormEvent} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {loginAction} from '../../store/api-actions';
-import {AuthData} from '../../types/auth-data';
-import {AppRoute} from '../../const';
+import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { FormEvent } from 'react';
+import { useRef } from 'react';
+import { loginAction } from '../../store/api-actions';
+import { AuthData } from '../../types/auth-data';
 import { store } from '../../store';
+import { getRandomIntegerInclusive, isUserAuth } from '../../offers';
+import { useAppSelector } from '../../hooks';
+import { toast } from 'react-toastify';
+import { CITIES } from '../../const';
+import { changeCityAction } from '../../store/app-process/app-process';
 
 function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const navigate = useNavigate();
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const city = CITIES[getRandomIntegerInclusive(0, 5)];
 
   const onSubmit = (authData: AuthData) => {
     store.dispatch(loginAction(authData));
+    return (<Navigate to="/" />);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+    const login = loginRef.current !== null ? loginRef.current.value : '';
+    const password = passwordRef.current !== null ? passwordRef.current.value : '';
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(login)) {
+      toast.error('Email is invalid');
+      return;
     }
+
+    if (!/[a-zA-Z]+[0-9]/.test(password) || !/\d/.test(password) || password.includes(' ')) {
+      toast.error('Password is invalid');
+      return;
+    }
+
+    onSubmit({
+      login: login,
+      password: password,
+    });
+
   };
+
+  if (isUserAuth(authorizationStatus)) {
+    return (<Navigate to="/" />);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -48,7 +71,6 @@ function LoginScreen(): JSX.Element {
               onSubmit={(evt: FormEvent<HTMLFormElement>) => {
                 evt.preventDefault();
                 handleSubmit(evt);
-                navigate(AppRoute.Root);
               }}
             >
               <div className="login__input-wrapper form__input-wrapper">
@@ -83,9 +105,13 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a href="#section" className="locations__item-link">
-                <span>Amsterdam</span>
-              </a>
+              <Link to="/" className="locations__item-link">
+                <span
+                  onClick={() => store.dispatch(changeCityAction(city))}
+                >
+                  {city.name}
+                </span>
+              </Link>
             </div>
           </section>
         </div>

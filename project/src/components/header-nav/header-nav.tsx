@@ -1,6 +1,6 @@
-import {isUserAuth} from '../../offers';
-import {useAppSelector} from '../../hooks/index';
-import {Link} from 'react-router-dom';
+import { isUserAuth } from '../../offers';
+import { useAppSelector } from '../../hooks/index';
+import { Link } from 'react-router-dom';
 import { store } from '../../store';
 import { logoutAction } from '../../store/api-actions';
 import { getMail } from '../../services/token';
@@ -14,11 +14,11 @@ function HeaderNav(): JSX.Element {
     <nav className="header__nav">
       <ul className="header__nav-list">
         <li className="header__nav-item user" hidden={!isAuth}>
-          <a className="header__nav-link header__nav-link--profile" href="#section">
+          <Link to="/favorites" className="header__nav-link header__nav-link--profile">
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
             <span className="header__user-name user__name">{userMail}</span>
-          </a>
+          </Link>
         </li>
         <li className="header__nav-item">
           <Link
