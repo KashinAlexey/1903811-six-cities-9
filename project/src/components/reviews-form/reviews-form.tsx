@@ -16,7 +16,7 @@ function ReviewsForm(): JSX.Element {
     rating: 0,
   });
 
-  const [isDisabled, setisDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const isValid = formData.rating !== null && formData.review !== '' && formData.review.length <= MAX_REVIEW_LENGTH && formData.review.length >= MIN_REVIEW_LENGTH;
 
@@ -31,13 +31,13 @@ function ReviewsForm(): JSX.Element {
   };
 
   const onSubmit = async (reviewData: UserComment) => {
-    setisDisabled(true);
+    setIsDisabled(true);
     await store.dispatch(fetchCommentAction(reviewData));
     setFormData({
       review: '',
       rating: 0,
     });
-    setisDisabled(false);
+    setIsDisabled(false);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {

@@ -7,11 +7,11 @@ type SortProps = {
 
 function Sort(props: SortProps): JSX.Element {
   const {onSortChange} = props;
-  const [isOpen, setisOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const [sortType, setSortType] = useState(SortType.default);
 
   const sortOpenHandle = () => {
-    setisOpen(!isOpen);
+    setIsOpen(!isOpen);
   };
 
   const sortChangeHandler = (type: string) => {

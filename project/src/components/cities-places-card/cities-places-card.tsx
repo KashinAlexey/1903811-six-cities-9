@@ -1,4 +1,4 @@
-import { AppRoute } from '../../const';
+import { AppRoute, RATING_TO_PERCENT } from '../../const';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { fetchSetIsFavoriteAction } from '../../store/api-actions';
 import { isUserAuth } from '../../offers';
@@ -66,7 +66,7 @@ function CitiesPlacesCard(props: CitiesPlacesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
+            <span style={{ width: `${Math.round(rating) * RATING_TO_PERCENT}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

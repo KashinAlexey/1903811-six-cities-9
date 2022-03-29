@@ -1,3 +1,4 @@
+import { RATING_TO_PERCENT } from '../../const';
 import { getSortedReviews } from '../../sort';
 import { Reviews } from '../../types/offer';
 import ReviewsForm from '../reviews-form/reviews-form';
@@ -37,7 +38,7 @@ function ReviewsList(props: ReviewsListProps) {
               <div className="reviews__info">
                 <div className="reviews__rating rating">
                   <div className="reviews__stars rating__stars">
-                    <span style={{ width: `${Math.round(review.rating) * 20}%` }}></span>
+                    <span style={{ width: `${Math.round(review.rating) * RATING_TO_PERCENT}%` }}></span>
                     <span className="visually-hidden">{review.rating}</span>
                   </div>
                 </div>

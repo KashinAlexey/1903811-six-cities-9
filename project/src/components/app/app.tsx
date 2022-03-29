@@ -2,7 +2,7 @@ import { AppRoute } from '../../const';
 import browserHistory from '../../browser-history';
 import { isCheckedAuth } from '../../offers';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import LoginScreen from '../login-screen/login-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import MainScreen from '../main-screen/main-screen';

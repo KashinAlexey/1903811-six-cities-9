@@ -69,16 +69,11 @@ export const EMPTY_OFFER = {
   type: '',
 };
 
-export const DEFAULT_ICON = {
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-};
-
 export const ICON_SIZE = 40;
 export const ICON_ANCHER = 20;
 export const MAX_REVIEW_LENGTH = 300;
 export const MIN_REVIEW_LENGTH = 50;
+export const RATING_TO_PERCENT = 20;
 
 export enum HTTP_CODE {
   BAD_REQUEST = 400,
